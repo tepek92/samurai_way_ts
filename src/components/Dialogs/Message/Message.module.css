@@ -1,0 +1,96 @@
+:root {
+    --main-background-color: #ece8e4;;
+    --message-background-color: #7ab9cb;
+}
+
+.column_block {
+    display: flex;
+    background-color: var(--main-background-color);
+}
+
+.column_block .user {
+    margin-left: 250px;
+}
+
+.avatar {
+    z-index: 1;
+    align-self: end;
+    max-height: 65px;
+    border-radius: 100%;
+}
+
+.message_block {
+    z-index: 0;
+    font-size: 18px;
+    margin: 10px;
+    flex-direction: column;
+    background-color: var(--message-background-color);
+    color: black;
+    width: 250px;
+    position: relative;
+    padding: 10px 20px;
+    border-radius: 25px;
+}
+
+.user:before, .user:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    height: 25px;
+}
+
+.user:before {
+    right: -7px;
+    width: 20px;
+    background-color: var(--message-background-color);
+    border-bottom-left-radius: 16px 14px;
+}
+
+.user:after {
+    right: -26px;
+    width: 26px;
+    background-color: var(--main-background-color);
+    border-bottom-left-radius: 10px;
+}
+
+.owner:before, .owner:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    height: 25px;
+}
+
+.owner:before {
+    left: -7px;
+    width: 20px;
+    background-color: var(--message-background-color);
+    border-bottom-right-radius: 16px 14px;
+}
+
+.owner:after {
+    left: -26px;
+    width: 26px;
+    background-color: var(--main-background-color);
+    border-bottom-right-radius: 10px;
+}
+
+.rows_block {
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #7631b7;
+}
+
+.text {
+    font-size: 17px;
+}
+
+.time {
+    font-size: 15px;
+    text-align: end;
+    opacity: 0.5;
+}

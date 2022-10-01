@@ -1,0 +1,32 @@
+.nav {
+    color: white;
+    grid-area: nav;
+    background-color: #474240;
+    font-weight: 700;
+}
+
+.link a {
+    display: block;
+    text-decoration: none;
+    color: white;
+}
+
+.nav div {
+    padding: 10px;
+}
+
+.nav div:first-child {
+    margin-top: 10px;
+}
+
+.link:active {
+    padding-left: 30px;
+}
+
+.link:hover {
+    background-color: #4db393;
+}
+
+.link .active {
+    padding-left: 15px;
+}
