@@ -1,0 +1,27 @@
+.body {
+    margin-top: 50px;
+    margin-left: 10px;
+}
+
+.friends {
+    display: flex;
+    flex-direction: row;
+}
+
+.avatar {
+    width: 40px;
+    border-radius: 50%;
+    align-items: start;
+}
+
+.element {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 10px 0 0;
+}
+
+.name {
+    font-size: 12px;
+    text-align: center;
+}
+

@@ -6,6 +6,7 @@
 .column_block {
     display: flex;
     background-color: var(--main-background-color);
+    margin-left: 15px;
 }
 
 .column_block .user {

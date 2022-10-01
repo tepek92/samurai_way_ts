@@ -12,7 +12,7 @@ export function Dialogs(props: DialogsPropsType) {
     const dialogs = props.dialogsPage.dialogs;
     const messages = props.dialogsPage.messages;
 
-    const dialogsElement = dialogs.map(d => <Dialog key={d.id} id={d.id} name={d.name}/>);
+    const dialogsElement = dialogs.map(d => <Dialog key={d.id} id={d.id} name={d.name} avatar={d.avatar}/>);
     const messagesElement = messages.map(m => {
         return (
             <Message

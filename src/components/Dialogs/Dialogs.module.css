@@ -12,6 +12,8 @@
 }
 
 .messages {
+    border-left: 1px solid #474240 ;
+    min-height: 600px;
 }
 
 .message {

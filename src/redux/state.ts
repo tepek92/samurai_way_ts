@@ -3,6 +3,7 @@ import {v1} from "uuid";
 export type DialogType = {
     id: string
     name: string
+    avatar: string
 };
 export type MessageType = {
     id: string
@@ -17,6 +18,11 @@ export type PostType = {
     text: string
     like: number
 }
+export type BestFriendsType = {
+    id: string
+    name: string
+    avatar: string
+}
 
 export type ProfilePageType = {
     posts: PostType[]
@@ -25,10 +31,14 @@ export type DialogsPageType = {
     dialogs: DialogType[]
     messages: MessageType[]
 }
+export type SideBarType = {
+    bestFriends: BestFriendsType[]
+}
 
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
+    sidebar: SideBarType
 }
 
 export const state: StateType = {
@@ -42,10 +52,10 @@ export const state: StateType = {
     },
     dialogsPage: {
         dialogs: [
-            {id: v1(), name: "Viktor"},
-            {id: v1(), name: "Masha"},
-            {id: v1(), name: "Tom"},
-            {id: v1(), name: "Mystag"},
+            {id: v1(), name: "Viktor", avatar: "https://shapka-youtube.ru/wp-content/uploads/2021/02/prikolnaya-avatarka-dlya-patsanov.jpg"},
+            {id: v1(), name: "Masha", avatar: "https://android-obzor.com/wp-content/uploads/2022/02/7-1.jpg"},
+            {id: v1(), name: "Tom", avatar: "https://www.meme-arsenal.com/memes/7bdea6754f999b50e9577596f09197fb.jpg"},
+            {id: v1(), name: "Mystag", avatar: "https://games.mail.ru/pre_xl_resize/hotbox/content_files//gallery/2020/12/11/74cbc80bf27b42fc9db919d9cb008aa6.jpg"},
         ],
         messages: [
             {
@@ -65,5 +75,12 @@ export const state: StateType = {
                 sender: "owner"
             },
         ],
-    }
-}
+    },
+    sidebar: {
+        bestFriends: [
+            {id: v1(), name: "Tom", avatar: "https://www.meme-arsenal.com/memes/7bdea6754f999b50e9577596f09197fb.jpg"},
+            {id: v1(), name: "Masha", avatar: "https://android-obzor.com/wp-content/uploads/2022/02/7-1.jpg"},
+            {id: v1(), name: "Mustag", avatar: "https://games.mail.ru/pre_xl_resize/hotbox/content_files//gallery/2020/12/11/74cbc80bf27b42fc9db919d9cb008aa6.jpg"},
+        ],
+    },
+};

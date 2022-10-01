@@ -21,10 +21,10 @@ function App(props: AppPropsType) {
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
-                <Navbar/>
+                <Navbar sidebar={state.sidebar}/>
                 <div className={"app-wrapper-content"}>
-                    <Route path={"/profile"} render={(props) => <Profile profilePage={state.profilePage}/>}/>
-                    <Route path={"/dialogs"} render={(props) => <Dialogs dialogsPage={state.dialogsPage}/>}/>
+                    <Route path={"/profile"} render={() => <Profile profilePage={state.profilePage}/>}/>
+                    <Route path={"/dialogs"} render={() => <Dialogs dialogsPage={state.dialogsPage}/>}/>
                     <Route path={"/news"} component={News}/>
                     <Route path={"/music"} component={Music}/>
                     <Route path={"/settings"} component={Settings}/>
