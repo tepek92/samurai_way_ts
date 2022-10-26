@@ -2,18 +2,20 @@ import React from 'react';
 // import style from './Profile.module.css';
 import {MyPosts} from "./MyPosts/MyPosts";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {ProfilePageType} from "../../redux/state";
+import {AllActionType, ProfilePageType} from "../../redux/state";
 
 type ProfilePropsType = {
     profilePage: ProfilePageType
+    dispatch: (action: AllActionType) => void
+
 }
 export function Profile(props: ProfilePropsType) {
-    const posts = props.profilePage.posts;
+    const {profilePage, dispatch} = props;
 
     return (
         <div>
             <ProfileInfo />
-            <MyPosts posts={posts}/>
+            <MyPosts profilePage={profilePage} dispatch={dispatch}/>
         </div>
     );
 }
