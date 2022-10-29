@@ -1,20 +1,20 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import style from './Dialogs.module.css';
 import {Message} from "./Message/Message";
 import {Dialog} from "./Dialog/Dialog";
-import {AllActionType, DialogsPageType} from "../../redux/state";
 import {SenderMessage} from "./SenderMessage/SenderMessage";
+import {DialogType, MessageType} from "../../redux/dialogsReducer";
 
 type DialogsPropsType = {
-    dialogsPage: DialogsPageType
-    dispatch: (action: AllActionType) => void
+    dialogs: DialogType[]
+    messages: MessageType[]
+    textMessage: string
+    onChangeHandler: (e: ChangeEvent<HTMLTextAreaElement>) => void
+    onClickHandler: () => void
 }
 
 export function Dialogs(props: DialogsPropsType) {
-    const dialogs = props.dialogsPage.dialogs;
-    const messages = props.dialogsPage.messages;
-    const textMessage = props.dialogsPage.textMessage;
-    const {dispatch} = props;
+    const {dialogs, messages, textMessage, onChangeHandler, onClickHandler} = props;
 
     const dialogsElement = dialogs.map(d => <Dialog key={d.id} id={d.id} name={d.name} avatar={d.avatar}/>);
     const messagesElement = messages.map(m => {
@@ -34,7 +34,7 @@ export function Dialogs(props: DialogsPropsType) {
             <div className={style.dialogs}>{dialogsElement}</div>
             <div className={style.messages}>
                 <div>{messagesElement}</div>
-                <SenderMessage textMessage={textMessage} dispatch={dispatch}/>
+                <SenderMessage textMessage={textMessage} onChangeHandler={onChangeHandler} onClickHandler={onClickHandler}/>
             </div>
         </div>
     );

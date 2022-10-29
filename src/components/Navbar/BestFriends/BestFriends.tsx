@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './BestFriends.module.css';
-import {BestFriendsType} from "../../../redux/state";
 import {Friend} from "./Friend/Friend";
+import {BestFriendsType} from "../../../redux/sidebarReducer";
 
 type BestFriendsPropsType = {
     bestFriends: BestFriendsType[]

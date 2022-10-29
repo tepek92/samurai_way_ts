@@ -1,18 +1,14 @@
 import React, {ChangeEvent} from 'react';
 import style from './SenderMessage.module.css';
-import {ACAddMessage, ACUpdateTextMessage, AllActionType} from "../../../redux/state";
 
 type SenderMessagePropsType = {
     textMessage: string
-    dispatch: (action: AllActionType) => void
+    onChangeHandler: (e: ChangeEvent<HTMLTextAreaElement>) => void
+    onClickHandler: () => void
 }
 
-
 export function SenderMessage(props: SenderMessagePropsType) {
-    const {textMessage, dispatch} = props;
-
-    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(ACUpdateTextMessage(e.currentTarget.value));
-    const onClickHandler = () => dispatch(ACAddMessage());
+    const {textMessage, onChangeHandler, onClickHandler} = props;
 
     return (
         <div className={style.content}>

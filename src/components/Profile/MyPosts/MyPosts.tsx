@@ -1,21 +1,18 @@
 import React, {ChangeEvent} from "react";
 import {Post} from "./Post/Post";
-import {ACAddPost, ACUpdateTextPost, AllActionType, ProfilePageType} from "../../../redux/state";
+import {PostType} from "../../../redux/profileReducer";
 // import style from './MyPosts.module.css'
 
 
 type MyPostsPropsType = {
-    profilePage: ProfilePageType
-    dispatch: (action: AllActionType) => void
+    posts: PostType[]
+    textPost: string
+    onChangeHandler: (e: ChangeEvent<HTMLTextAreaElement>) => void
+    onClickHandler: () => void
 };
 
 export function MyPosts(props: MyPostsPropsType) {
-    const posts = props.profilePage.posts;
-    const textPost = props.profilePage.textPost;
-    const {dispatch} = props;
-
-    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(ACUpdateTextPost(e.currentTarget.value));
-    const onClickHandler = () => dispatch(ACAddPost());
+    const {posts, textPost, onChangeHandler, onClickHandler} = props;
 
     const postsElement = posts.map(p => <Post key={p.id} text={p.text} like={p.like}/>);
 

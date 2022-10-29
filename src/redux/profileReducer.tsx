@@ -1,8 +1,24 @@
 import {v1} from "uuid";
-import {AllActionType, ProfilePageType} from "./state";
+import {AllActionType} from "./store";
 
+export type PostType = {
+    id: string
+    text: string
+    like: number
+}
+export type ProfilePageType = typeof initialState;
 
-export const profileReducer = (state: ProfilePageType, action: AllActionType ) => {
+const initialState =  {
+    posts: [
+        {id: v1(), text: "Im ready learning React!", like: 78},
+        {id: v1(), text: "JS is cool!", like: 34},
+        {id: v1(), text: "Good day!", like: 5},
+        {id: v1(), text: "Hello!", like: 1},
+    ] as PostType[],
+    textPost: "" as string
+};
+
+export const profileReducer = (state: ProfilePageType = initialState, action: AllActionType): ProfilePageType => {
     const newState: ProfilePageType = {
         ...state,
         posts: [...state.posts]
@@ -21,3 +37,6 @@ export const profileReducer = (state: ProfilePageType, action: AllActionType ) =
         default: return newState;
     }
 }
+
+export const ACAddPost = () => ({type: "ADD-POST"} as const);
+export const ACUpdateTextPost = (newText: string) => ({type: "UPDATE-TEXT-POST", newText} as const);
