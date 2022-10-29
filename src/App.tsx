@@ -12,21 +12,24 @@ import {AllActionType, StateType, StoreType} from "./redux/store";
 
 
 type AppPropsType = {
-    state: StateType
-    dispatch: (action: AllActionType) => void
-    store: StoreType
+    // state: StateType
+    // dispatch: (action: AllActionType) => void
+    // store: StoreType
 }
 
 function App(props: AppPropsType) {
-    const {store} = props;
+    // const {store} = props;
     return (
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
-                <Navbar sidebar={store.getState().sidebar}/>
+                {/*<Navbar sidebar={store.getState().sidebar}/>*/}
+                <Navbar />
                 <div className={"app-wrapper-content"}>
-                    <Route path={"/profile"} render={() => <Profile store={store}/>}/>
-                    <Route path={"/dialogs"} render={() => <DialogsContainer store={store}/>}/>
+                    {/*<Route path={"/profile"} render={() => <Profile store={store}/>}/>*/}
+                    {/*<Route path={"/dialogs"} render={() => <DialogsContainer store={store}/>}/>*/}
+                    <Route path={"/profile"} render={() => <Profile />}/>
+                    <Route path={"/dialogs"} render={() => <DialogsContainer />}/>
                     <Route path={"/news"} component={News}/>
                     <Route path={"/music"} component={Music}/>
                     <Route path={"/settings"} component={Settings}/>
