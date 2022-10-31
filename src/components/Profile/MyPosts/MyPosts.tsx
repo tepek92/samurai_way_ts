@@ -4,7 +4,7 @@ import {PostType} from "../../../redux/profileReducer";
 // import style from './MyPosts.module.css'
 
 
-type MyPostsPropsType = {
+export type MyPostsPropsType = {
     posts: PostType[]
     textPost: string
     onChangeHandler: (e: ChangeEvent<HTMLTextAreaElement>) => void

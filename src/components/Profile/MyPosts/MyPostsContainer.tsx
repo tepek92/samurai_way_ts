@@ -1,50 +1,18 @@
-import React, {ChangeEvent} from "react";
+import {ChangeEvent} from "react";
 import {ACAddPost, ACUpdateTextPost} from "../../../redux/profileReducer";
-import {StoreType} from "../../../redux/store";
-import {MyPosts} from "./MyPosts";
-import {StoreContext} from "../../../redux/storeContext";
+import {DispatchType, StateType} from "../../../redux/store";
+import {MyPosts, MyPostsPropsType} from "./MyPosts";
+import {connect} from "react-redux";
 // import style from './MyPosts.module.css'
 
+    const mapStateToProps = (state: StateType): Omit<MyPostsPropsType, 'onChangeHandler' |'onClickHandler'> => ({
+        posts: state.profilePage.posts,
+        textPost: state.profilePage.textPost,
+    });
 
-type MyPostsPropsType = {
-    // store: StoreType
-};
+    const mapDispatchToProps = (dispatch: DispatchType): Omit<MyPostsPropsType, 'posts' | 'textPost'> => ({
+        onChangeHandler: (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(ACUpdateTextPost(e.currentTarget.value)),
+        onClickHandler: () => dispatch(ACAddPost())
+    })
 
-// export function MyPostsContainer({store}: MyPostsPropsType) {
-//     const posts = store.getState().profilePage.posts;
-//     const textPost = store.getState().profilePage.textPost;
-//     const {dispatch} = store;
-//
-//     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(ACUpdateTextPost(e.currentTarget.value));
-//     const onClickHandler = () => dispatch(ACAddPost());
-//
-//     return (
-//         <MyPosts posts={posts} textPost={textPost} onChangeHandler={onChangeHandler} onClickHandler={onClickHandler} />
-//     );
-// }
-
-export function MyPostsContainer() {
-    return (
-        <StoreContext.Consumer>
-            {
-                (store) =>
-                {
-                    const posts = store.getState().profilePage.posts;
-                    const textPost = store.getState().profilePage.textPost;
-                    const {dispatch} = store;
-
-                    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(ACUpdateTextPost(e.currentTarget.value));
-                    const onClickHandler = () => dispatch(ACAddPost());
-
-                    return (
-                        <MyPosts posts={posts} textPost={textPost} onChangeHandler={onChangeHandler} onClickHandler={onClickHandler} />
-                    );
-                }
-            }
-        </StoreContext.Consumer>
-    );
-
-
-
-
-}
+    export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
