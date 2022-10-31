@@ -11,7 +11,6 @@ export type AllActionType =
 
 export type StateType = ReturnType<typeof rootReducers>
 export type StoreType = typeof store;
-export type DispatchType = typeof store.dispatch;
 
 const rootReducers = combineReducers({
     profilePage: profileReducer,
