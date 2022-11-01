@@ -19,22 +19,17 @@ const initialState =  {
 };
 
 export const profileReducer = (state: ProfilePageType = initialState, action: AllActionType): ProfilePageType => {
-    const newState: ProfilePageType = {
-        ...state,
-        posts: [...state.posts]
-    };
+
 
     switch (action.type) {
         case "ADD-POST":
-            if (newState.textPost.trim() !== '') {
-                newState.posts.push({id: v1(), text: newState.textPost, like: 0});
-            }
-            newState.textPost = "";
-            return newState;
-        case "UPDATE-TEXT-POST":
-            newState.textPost = action.newText;
-            return newState;
-        default: return newState;
+            return {...state,
+                posts: [...state.posts, {id: v1(), text: state.textPost, like: 0}],
+                textPost: ""}
+        case "UPDATE-TEXT-POST": {
+            return {...state, textPost: action.newText};
+        }
+        default: return state;
     }
 }
 
