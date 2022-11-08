@@ -49,12 +49,17 @@ export function Users(props: UsersPropsType) {
     //     },
     // ];
 
-    if (users.length === 0) {
-        axios.get("https://social-network.samuraijs.com/api/1.0/users")
-            .then(response => {
-                onSetUsers(response.data.items);
-            })
+
+
+    const addUsersHandler = () => {
+        if (users.length === 0) {
+            axios.get("https://social-network.samuraijs.com/api/1.0/users")
+                .then(response => {
+                    onSetUsers(response.data.items);
+                });
+        }
     }
+
 
 
     const userElements = users.map(u => {
@@ -86,6 +91,7 @@ export function Users(props: UsersPropsType) {
 
     return (
       <div className={s.content}>
+          <button onClick={addUsersHandler}>ADD USERS</button>
           {userElements}
       </div>
     );
