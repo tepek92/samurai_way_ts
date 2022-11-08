@@ -10,7 +10,7 @@ const mapStateToProps = (state: StateType): Omit<UsersPropsType, 'onToggleSubscr
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Omit<UsersPropsType, 'users'> => ({
-    onToggleSubscribe: (userId: string) => dispatch(ACToggleSubscribe(userId)),
+    onToggleSubscribe: (userId: number) => dispatch(ACToggleSubscribe(userId)),
     onSetUsers: (users: UserType[]) => dispatch(ACSetUsers(users))
 });
 
