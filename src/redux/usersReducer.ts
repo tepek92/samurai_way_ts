@@ -1,17 +1,8 @@
-import {v1} from "uuid";
-import {AllActionType} from "./store";
-
-export {}
-
-export type UsersPageType = typeof initialState;
-// export type UserType = {
-//     id: string,
-//     name: string,
-//     status: string,
-//     location: {country: string, city: string},
-//     subscribe: boolean,
-//     avatar: string,
-// }
+export type AllActionsType =
+    ReturnType<typeof ACToggleSubscribe> |
+    ReturnType<typeof ACSetUsers> |
+    ReturnType<typeof ACChangeCurrentPage> |
+    ReturnType<typeof ACSetTotalUsersCount>;
 
 type PhotosUserType = {
     small: string
@@ -28,18 +19,30 @@ export type UserType = {
 
 const initialState = {
     users: [] as UserType[],
+    pageSize: 5,
+    currentPage: 3,
+    totalUsersCount: 100
 };
+export type UsersPageType = typeof initialState;
 
-export const usersReducer = (state: UsersPageType = initialState, action: AllActionType): UsersPageType => {
+
+export const usersReducer = (state: UsersPageType = initialState, action: AllActionsType): UsersPageType => {
     switch(action.type) {
         case 'TOGGLE-SUBSCRIBE':
             return {...state,
                 users: state.users.map(u => u.id === action.userId ? {...u, followed: !u.followed}: u)}
         case 'SET-USERS':
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: action.users}
+        case "CHANGE-CURRENT-PAGE":
+            return {...state, currentPage: action.page}
+        case "SET-TOTAL-USERS-COUNT":
+            return {...state, totalUsersCount: action.count}
         default: return state;
     }
 }
 
 export const ACToggleSubscribe = (userId: number) => ({type: 'TOGGLE-SUBSCRIBE', userId} as const);
 export const ACSetUsers = (users: UserType[]) => ({type: 'SET-USERS', users} as const);
+export const ACChangeCurrentPage = (page: number) => ({type: 'CHANGE-CURRENT-PAGE', page} as const);
+export const ACSetTotalUsersCount = (count: number) => ({type: 'SET-TOTAL-USERS-COUNT', count} as const);
+
