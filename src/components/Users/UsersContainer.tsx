@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Users} from "./Users";
-import {Dispatch} from "redux";
 import {StateType} from "../../redux/store";
 import {
     changeCurrentPageAC,
@@ -97,12 +96,10 @@ const mapStateToProps = (state: StateType): MapStateToPropsType => ({
     isFetching: state.usersPage.isFetching,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => ({
-    onToggleSubscribe: (userId: number) => dispatch(toggleSubscribeAC(userId)),
-    onSetUsers: (users: UserType[]) => dispatch(setUsersAC(users)),
-    onChangeCurrenPage: (page: number) => dispatch(changeCurrentPageAC(page)),
-    onSetTotalUsersCount: (count: number) => dispatch(setTotalUsersCountAC(count)),
-    onToggleIsFetching: (isFetching: boolean) => dispatch(toggleIsFetchingAC(isFetching))
-});
-
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersContainerAPI);
+export const UsersContainer = connect(mapStateToProps, {
+    onToggleSubscribe: toggleSubscribeAC,
+    onSetUsers: setUsersAC,
+    onChangeCurrenPage: changeCurrentPageAC,
+    onSetTotalUsersCount: setTotalUsersCountAC,
+    onToggleIsFetching: toggleIsFetchingAC
+})(UsersContainerAPI);
