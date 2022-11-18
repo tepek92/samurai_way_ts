@@ -1,5 +1,9 @@
 import {v1} from "uuid";
-import {AllActionType} from "./store";
+
+type AllActionsType =
+    ReturnType<typeof addPostAC> |
+    ReturnType<typeof updateTextPostAC>;
+
 
 export type PostType = {
     id: string
@@ -18,7 +22,7 @@ const initialState =  {
     textPost: "" as string
 };
 
-export const profileReducer = (state: ProfilePageType = initialState, action: AllActionType): ProfilePageType => {
+export const profileReducer = (state: ProfilePageType = initialState, action: AllActionsType): ProfilePageType => {
 
 
     switch (action.type) {
@@ -33,5 +37,5 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Al
     }
 }
 
-export const ACAddPost = () => ({type: "ADD-POST"} as const);
-export const ACUpdateTextPost = (newText: string) => ({type: "UPDATE-TEXT-POST", newText} as const);
+export const addPostAC = () => ({type: "ADD-POST"} as const);
+export const updateTextPostAC = (newText: string) => ({type: "UPDATE-TEXT-POST", newText} as const);

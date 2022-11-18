@@ -4,39 +4,105 @@ import {Users} from "./Users";
 import {Dispatch} from "redux";
 import {StateType} from "../../redux/store";
 import {
-    ACChangeCurrentPage,
-    ACSetTotalUsersCount,
-    ACSetUsers,
-    ACToggleSubscribe,
+    changeCurrentPageAC,
+    setTotalUsersCountAC,
+    setUsersAC, toggleIsFetchingAC,
+    toggleSubscribeAC,
     UserType
 } from "../../redux/usersReducer";
+import axios from "axios";
 
-export type MapStateToPropsType = {
+
+type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType;
+type UserResponseType = {
+    items: UserType[]
+    totalCount: number
+    error: null
+}
+
+class UsersContainerAPI extends React.Component<UsersPropsType> {
+
+    // вызывается, когда компонента вмонтировалась в разметку
+    componentDidMount() {
+        this.props.onToggleIsFetching(true);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            .then(response => {
+                const data: UserResponseType = response.data;
+                this.props.onSetUsers(data.items);
+                this.props.onSetTotalUsersCount(data.totalCount);
+                this.props.onToggleIsFetching(false);
+            });
+    }
+
+    onClickChangeCurrentPage = (page: number) => {
+        this.props.onToggleIsFetching(true);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.onSetUsers(response.data.items);
+                this.props.onToggleIsFetching(false);
+            });
+        this.props.onChangeCurrenPage(page);
+    }
+
+    render() {
+        const {
+            users,
+            pageSize,
+            currentPage,
+            totalUsersCount,
+            isFetching,
+            onToggleSubscribe,
+            onSetUsers,
+
+        } = this.props;
+
+        return (
+            <Users
+                users={users}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                totalUsersCount={totalUsersCount}
+                isFetching={isFetching}
+                onToggleSubscribe={onToggleSubscribe}
+                onSetUsers={onSetUsers}
+                onClickChangeCurrentPage={this.onClickChangeCurrentPage}
+                />
+        );
+    }
+}
+
+
+type MapStateToPropsType = {
     users: UserType[]
     pageSize: number
     currentPage: number
     totalUsersCount: number
+    isFetching: boolean
 }
 
-export type MapDispatchToPropsType = {
+type MapDispatchToPropsType = {
     onToggleSubscribe: (userId: number) => void
     onSetUsers: (users: UserType[]) => void
     onChangeCurrenPage: (page: number) => void
     onSetTotalUsersCount: (count: number) => void
+    onToggleIsFetching: (isFetching: boolean) => void
 }
+
 
 const mapStateToProps = (state: StateType): MapStateToPropsType => ({
     users: state.usersPage.users,
     pageSize: state.usersPage.pageSize,
     currentPage: state.usersPage.currentPage,
     totalUsersCount: state.usersPage.totalUsersCount,
+    isFetching: state.usersPage.isFetching,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => ({
-    onToggleSubscribe: (userId: number) => dispatch(ACToggleSubscribe(userId)),
-    onSetUsers: (users: UserType[]) => dispatch(ACSetUsers(users)),
-    onChangeCurrenPage: (page: number) => dispatch(ACChangeCurrentPage(page)),
-    onSetTotalUsersCount: (count: number) => dispatch(ACSetTotalUsersCount(count)),
+    onToggleSubscribe: (userId: number) => dispatch(toggleSubscribeAC(userId)),
+    onSetUsers: (users: UserType[]) => dispatch(setUsersAC(users)),
+    onChangeCurrenPage: (page: number) => dispatch(changeCurrentPageAC(page)),
+    onSetTotalUsersCount: (count: number) => dispatch(setTotalUsersCountAC(count)),
+    onToggleIsFetching: (isFetching: boolean) => dispatch(toggleIsFetchingAC(isFetching))
 });
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
+export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersContainerAPI);

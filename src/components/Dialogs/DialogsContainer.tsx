@@ -1,5 +1,5 @@
 import {ChangeEvent} from 'react';
-import {ACAddMessage, ACUpdateTextMessage} from "../../redux/dialogsReducer";
+import {addMessageAC, updateTextMessageAC} from "../../redux/dialogsReducer";
 import {Dialogs, DialogsPropsType} from "./Dialogs";
 import {StateType} from "../../redux/store";
 import {connect} from "react-redux";
@@ -12,8 +12,8 @@ const mapStateToProps = (state: StateType): Omit<DialogsPropsType, 'onChangeHand
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Omit<DialogsPropsType, 'dialogs' | 'messages' | 'textMessage'> => ({
-    onChangeHandler: (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(ACUpdateTextMessage(e.currentTarget.value)),
-    onClickHandler: () => dispatch(ACAddMessage())
+    onChangeHandler: (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(updateTextMessageAC(e.currentTarget.value)),
+    onClickHandler: () => dispatch(addMessageAC())
 });
 
 export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);

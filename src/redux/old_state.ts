@@ -45,10 +45,10 @@ type StateType = {
 
 
 type AllActionType =
-    ReturnType<typeof ACAddPost> |
-    ReturnType<typeof ACUpdateTextPost> |
-    ReturnType<typeof ACAddMessage> |
-    ReturnType<typeof ACUpdateTextMessage>;
+    ReturnType<typeof addPostAC> |
+    ReturnType<typeof updateTextPostAC> |
+    ReturnType<typeof addMessageAC> |
+    ReturnType<typeof updateTextMessageAC>;
 
 type StoreType = {
     _state: StateType
@@ -114,8 +114,8 @@ type StoreType = {
 //     }
 // }
 
-const ACAddPost = () => ({type: "ADD-POST"} as const);
-const ACUpdateTextPost = (newText: string) => ({type: "UPDATE-TEXT-POST", newText} as const);
+const addPostAC = () => ({type: "ADD-POST"} as const);
+const updateTextPostAC = (newText: string) => ({type: "UPDATE-TEXT-POST", newText} as const);
 
-const ACAddMessage = () => ({type: "ADD-MESSAGE"} as const);
-const ACUpdateTextMessage = (newText: string) => ({type: "UPDATE-TEXT-MESSAGE", newText} as const);
+const addMessageAC = () => ({type: "ADD-MESSAGE"} as const);
+const updateTextMessageAC = (newText: string) => ({type: "UPDATE-TEXT-MESSAGE", newText} as const);

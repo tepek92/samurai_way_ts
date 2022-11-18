@@ -1,5 +1,4 @@
 import {v1} from "uuid";
-import {AllActionType} from "./store";
 
 export type BestFriendsType = {
     id: string
@@ -8,6 +7,7 @@ export type BestFriendsType = {
 }
 export type SideBarType = typeof initialState
 
+type AllActionsType = {type: "TEST"};
 
 const initialState = {
     bestFriends: [
@@ -17,6 +17,6 @@ const initialState = {
     ] as BestFriendsType[],
 }
 
-export const sidebarReducer = (state: SideBarType = initialState, action: AllActionType): SideBarType  => {
+export const sidebarReducer = (state: SideBarType = initialState, action: AllActionsType): SideBarType  => {
     return state
 }

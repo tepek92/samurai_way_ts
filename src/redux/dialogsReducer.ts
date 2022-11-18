@@ -1,5 +1,8 @@
 import {v1} from "uuid";
-import {AllActionType} from "./store";
+
+type AllActionsType =
+    ReturnType<typeof addMessageAC> |
+    ReturnType<typeof updateTextMessageAC>
 
 export type DialogType = {
     id: string
@@ -44,7 +47,7 @@ const initialState = {
         textMessage: '' as string,
     };
 
-export const dialogsReducer = (state: DialogsPageType = initialState, action: AllActionType): DialogsPageType => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: AllActionsType): DialogsPageType => {
     switch (action.type) {
         case "ADD-MESSAGE":
             const newMessage: MessageType = {
@@ -65,6 +68,6 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Al
 
 }
 
-export const ACAddMessage = () => ({type: "ADD-MESSAGE"} as const);
-export const ACUpdateTextMessage = (newText: string) => ({type: "UPDATE-TEXT-MESSAGE", newText} as const);
+export const addMessageAC = () => ({type: "ADD-MESSAGE"} as const);
+export const updateTextMessageAC = (newText: string) => ({type: "UPDATE-TEXT-MESSAGE", newText} as const);
 

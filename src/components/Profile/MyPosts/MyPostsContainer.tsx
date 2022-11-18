@@ -1,5 +1,5 @@
 import {ChangeEvent} from "react";
-import {ACAddPost, ACUpdateTextPost} from "../../../redux/profileReducer";
+import {addPostAC, updateTextPostAC} from "../../../redux/profileReducer";
 import {StateType} from "../../../redux/store";
 import {MyPosts, MyPostsPropsType} from "./MyPosts";
 import {connect} from "react-redux";
@@ -12,8 +12,8 @@ import {Dispatch} from "redux";
     });
 
     const mapDispatchToProps = (dispatch: Dispatch): Omit<MyPostsPropsType, 'posts' | 'textPost'> => ({
-        onChangeHandler: (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(ACUpdateTextPost(e.currentTarget.value)),
-        onClickHandler: () => dispatch(ACAddPost())
+        onChangeHandler: (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(updateTextPostAC(e.currentTarget.value)),
+        onClickHandler: () => dispatch(addPostAC())
     })
 
     export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
