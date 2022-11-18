@@ -1,17 +1,24 @@
 import React from 'react'
 import style from './ProfileInfo.module.css'
+import {MapStateType} from "../ProfileContainer";
+import {Preloader} from "../../common/Preloader/Preloader";
+import avatar from '../../../img/samurai2.png'
 
-export function ProfileInfo() {
+
+export function ProfileInfo(props: MapStateType) {
+    const {profile} = props;
 
     return (
-        <div className={style.profile_info}>
-            <img className={style.avatar}
-                 src={"https://i.pinimg.com/originals/9c/77/46/9c7746225873e02d83b9315501b8dd2f.jpg"} alt={''}/>
-            <div className={style.info}>
-                <p><b>Pavel Rasyk</b></p>
-                <p>City: Novosibirsk</p>
-                <p>Status: Im GOOD!</p>
+        !profile.userId
+            ? <Preloader/>
+            : <div className={style.profile_info}>
+                <img className={style.avatar}
+                     src={profile.photos ? profile.photos.large : avatar} alt={''}/>
+                <div className={style.info}>
+                    <p><b>{profile.fullName ? profile.fullName : 'Samurai'}</b></p>
+                    <p><b>Статус: </b>{profile.aboutMe ? profile.aboutMe : "Нет статуса:("}</p>
+                    <p><b>Ищет работу: </b>{profile.lookingForAJob ? profile.lookingForAJobDescription : "Уже работаю:)"}</p>
+                </div>
             </div>
-        </div>
     );
 }

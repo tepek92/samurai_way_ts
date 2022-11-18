@@ -5,7 +5,7 @@ type AllActionsType =
     ReturnType<typeof setTotalUsersCountAC> |
     ReturnType<typeof toggleIsFetchingAC>;
 
-type PhotosUserType = {
+export type PhotosUserType = {
     small: string
     large: string
 }

@@ -3,6 +3,8 @@ import s from "./Users.module.css"
 import avatar from "../../img/samurai2.png"
 import {UserType} from "../../redux/usersReducer";
 import {Preloader} from "../common/Preloader/Preloader";
+import {NavLink} from "react-router-dom";
+import {v1} from "uuid";
 
 type UsersPropsType = {
     users: UserType[]
@@ -35,7 +37,11 @@ export function Users(props: UsersPropsType) {
         return (
             <div key={u.id} className={s.user}>
                 <div className={s.ava_btn}>
-                    <div><img alt={''} src={u.photos.small ? u.photos.small : avatar}/></div>
+                    <NavLink className={s.navLink} to={`profile/${u.id}`}>
+                        <div>
+                            <img alt={''} src={u.photos.small ? u.photos.small : avatar}/>
+                        </div>
+                    </NavLink>
                     <div>
                         <button className={styleBtn} onClick={onClickHandler}>{subscribe}</button>
                     </div>
@@ -65,7 +71,7 @@ export function Users(props: UsersPropsType) {
     for (let i = pageStart; i <= pageEnd; i++) {
         const onClickHandler = (): void => onClickChangeCurrentPage(i);
         const style = i === currentPage ? s.activePage : '';
-        paginationElements.push(<span className={style} onClick={onClickHandler}>{i} </span>);
+        paginationElements.push(<span key={v1()} className={style} onClick={onClickHandler}>{i} </span>);
     }
 
     const setStartPage = (): void => {
@@ -77,7 +83,7 @@ export function Users(props: UsersPropsType) {
 
     return (
         isFetching
-            ? <Preloader />
+            ? <Preloader/>
             : <div className={s.content}>
                 <div className={s.pagination}>
                     <span onClick={setStartPage}>&laquo;</span>

@@ -52,7 +52,6 @@ class UsersContainerAPI extends React.Component<UsersPropsType> {
             isFetching,
             onToggleSubscribe,
             onSetUsers,
-
         } = this.props;
 
         return (
