@@ -19,3 +19,7 @@ p {
     border-radius: 100%;
     align-self:flex-start;
 }
+
+.name {
+    font-size: 20px;
+}

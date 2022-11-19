@@ -37,11 +37,11 @@ export function Users(props: UsersPropsType) {
         return (
             <div key={u.id} className={s.user}>
                 <div className={s.ava_btn}>
-                    <NavLink className={s.navLink} to={`profile/${u.id}`}>
-                        <div>
+                    <div>
+                        <NavLink className={s.navLink} to={`profile/${u.id}`}>
                             <img alt={''} src={u.photos.small ? u.photos.small : avatar}/>
-                        </div>
-                    </NavLink>
+                        </NavLink>
+                    </div>
                     <div>
                         <button className={styleBtn} onClick={onClickHandler}>{subscribe}</button>
                     </div>

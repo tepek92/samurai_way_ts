@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from "react";
 import {Post} from "./Post/Post";
-import {PostType} from "../../../redux/profileReducer";
+import {PostType, UserProfileType} from "../../../redux/profileReducer";
 // import style from './MyPosts.module.css'
 
 
@@ -9,12 +9,13 @@ export type MyPostsPropsType = {
     textPost: string
     onChangeHandler: (e: ChangeEvent<HTMLTextAreaElement>) => void
     onClickHandler: () => void
+    profile: UserProfileType
 };
 
 export function MyPosts(props: MyPostsPropsType) {
-    const {posts, textPost, onChangeHandler, onClickHandler} = props;
+    const {posts, textPost, profile, onChangeHandler, onClickHandler} = props;
 
-    const postsElement = posts.map(p => <Post key={p.id} text={p.text} like={p.like}/>);
+    const postsElement = posts.map(p => <Post key={p.id} text={p.text} like={p.like} profile={profile}/>);
 
     return (
         <div>

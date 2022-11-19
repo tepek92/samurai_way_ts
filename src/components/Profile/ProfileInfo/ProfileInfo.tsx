@@ -13,9 +13,9 @@ export function ProfileInfo(props: MapStateType) {
             ? <Preloader/>
             : <div className={style.profile_info}>
                 <img className={style.avatar}
-                     src={profile.photos ? profile.photos.large : avatar} alt={''}/>
+                     src={profile.photos.large ? profile.photos.large : avatar} alt={''}/>
                 <div className={style.info}>
-                    <p><b>{profile.fullName ? profile.fullName : 'Samurai'}</b></p>
+                    <p className={style.name}><b>{profile.fullName ? profile.fullName : 'Samurai'}</b></p>
                     <p><b>Статус: </b>{profile.aboutMe ? profile.aboutMe : "Нет статуса:("}</p>
                     <p><b>Ищет работу: </b>{profile.lookingForAJob ? profile.lookingForAJobDescription : "Уже работаю:)"}</p>
                 </div>

@@ -9,9 +9,10 @@ import {Dispatch} from "redux";
     const mapStateToProps = (state: StateType): Omit<MyPostsPropsType, 'onChangeHandler' |'onClickHandler'> => ({
         posts: state.profilePage.posts,
         textPost: state.profilePage.textPost,
+        profile: state.profilePage.profile
     });
 
-    const mapDispatchToProps = (dispatch: Dispatch): Omit<MyPostsPropsType, 'posts' | 'textPost'> => ({
+    const mapDispatchToProps = (dispatch: Dispatch): Omit<MyPostsPropsType, 'posts' | 'textPost' | 'profile'> => ({
         onChangeHandler: (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(updateTextPostAC(e.currentTarget.value)),
         onClickHandler: () => dispatch(addPostAC())
     })
