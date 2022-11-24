@@ -16,7 +16,6 @@ class ProfileContainerAPI extends React.Component<ProfileContainerType> {
 
 
     componentDidMount() {
-        console.log(this.props)
         const userId = this.props.match.params.userId ? this.props.match.params.userId : '2';
 
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
