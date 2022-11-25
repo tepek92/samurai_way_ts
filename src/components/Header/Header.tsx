@@ -18,7 +18,7 @@ export function Header(props: HeaderPropsType) {
             </div>
             {isAuth
                 ?
-                <div>SAMURAI {login}</div>
+                <div>samurai {login}</div>
                 :
                 <div>
                     <NavLink className={style.link} to={"/login"}>LOGIN</NavLink>

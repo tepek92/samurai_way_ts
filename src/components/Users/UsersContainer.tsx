@@ -5,7 +5,8 @@ import {StateType} from "../../redux/store";
 import {
     changeCurrentPageAC,
     setTotalUsersCountAC,
-    setUsersAC, toggleIsFetchingAC,
+    setUsersAC,
+    toggleIsFetchingAC,
     toggleSubscribeAC,
     UserType
 } from "../../redux/usersReducer";
@@ -24,7 +25,9 @@ class UsersContainerAPI extends React.Component<UsersPropsType> {
     // вызывается, когда компонента вмонтировалась в разметку
     componentDidMount() {
         this.props.onToggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+            withCredentials: true
+        })
             .then(response => {
                 const data: UserResponseType = response.data;
                 this.props.onSetUsers(data.items);
@@ -35,12 +38,38 @@ class UsersContainerAPI extends React.Component<UsersPropsType> {
 
     onClickChangeCurrentPage = (page: number) => {
         this.props.onToggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`, {
+            withCredentials: true
+        })
             .then(response => {
                 this.props.onSetUsers(response.data.items);
                 this.props.onToggleIsFetching(false);
             });
         this.props.onChangeCurrenPage(page);
+    }
+
+    subscribeToggle = (userId: number) => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {
+            withCredentials: true
+        }).then(response => {
+            if (response.data) {
+                axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {
+                    withCredentials: true
+                }).then(response => {
+                    if (response.data.resultCode === 0) {
+                        this.props.onToggleSubscribe(userId)
+                    }
+                })
+            } else {
+                axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {}, {
+                    withCredentials: true
+                }).then(response => {
+                    if (response.data.resultCode === 0) {
+                        this.props.onToggleSubscribe(userId)
+                    }
+                })
+            }
+        })
     }
 
     render() {
@@ -50,7 +79,6 @@ class UsersContainerAPI extends React.Component<UsersPropsType> {
             currentPage,
             totalUsersCount,
             isFetching,
-            onToggleSubscribe,
             onSetUsers,
         } = this.props;
 
@@ -61,10 +89,10 @@ class UsersContainerAPI extends React.Component<UsersPropsType> {
                 currentPage={currentPage}
                 totalUsersCount={totalUsersCount}
                 isFetching={isFetching}
-                onToggleSubscribe={onToggleSubscribe}
+                onToggleSubscribe={this.subscribeToggle}
                 onSetUsers={onSetUsers}
                 onClickChangeCurrentPage={this.onClickChangeCurrentPage}
-                />
+            />
         );
     }
 }
