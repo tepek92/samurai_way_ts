@@ -12,6 +12,7 @@ type UsersPropsType = {
     currentPage: number
     totalUsersCount: number
     isFetching: boolean
+    isFollowing: number[]
     onToggleSubscribe: (userId: number) => void
     onSetUsers: (users: UserType[]) => void
     onClickChangeCurrentPage: (page: number) => void
@@ -25,6 +26,7 @@ export function Users(props: UsersPropsType) {
         currentPage,
         totalUsersCount,
         isFetching,
+        isFollowing,
         onToggleSubscribe,
         onClickChangeCurrentPage,
     } = props;
@@ -33,7 +35,6 @@ export function Users(props: UsersPropsType) {
         const subscribe = u.followed ? "UNFOLLOW" : "FOLLOW";
         const styleBtn = u.followed ? s.btn + ' ' + s.unfollow : s.btn;
         const onClickHandler = () => onToggleSubscribe(u.id);
-
         return (
             <div key={u.id} className={s.user}>
                 <div className={s.ava_btn}>
@@ -43,7 +44,10 @@ export function Users(props: UsersPropsType) {
                         </NavLink>
                     </div>
                     <div>
-                        <button className={styleBtn} onClick={onClickHandler}>{subscribe}</button>
+                        <button
+                            disabled={isFollowing.some(f => f === u.id)}
+                            className={styleBtn}
+                            onClick={onClickHandler}>{subscribe}</button>
                     </div>
                 </div>
 

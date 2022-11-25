@@ -3,7 +3,8 @@ type AllActionsType =
     ReturnType<typeof setUsersAC> |
     ReturnType<typeof changeCurrentPageAC> |
     ReturnType<typeof setTotalUsersCountAC> |
-    ReturnType<typeof toggleIsFetchingAC>;
+    ReturnType<typeof toggleIsFetchingAC> |
+    ReturnType<typeof toggleIsFollowingAC>;
 
 export type PhotosUserType = {
     small: string
@@ -18,21 +19,25 @@ export type UserType = {
     photos: PhotosUserType
 }
 
+type FollowingUserType = number[]
 const initialState = {
     users: [] as UserType[],
     pageSize: 5,
     currentPage: 1,
     totalUsersCount: 100,
-    isFetching: false
+    isFetching: false,
+    isFollowing: [] as FollowingUserType
 };
 export type UsersPageType = typeof initialState;
 
 
 export const usersReducer = (state: UsersPageType = initialState, action: AllActionsType): UsersPageType => {
-    switch(action.type) {
+    switch (action.type) {
         case 'TOGGLE-SUBSCRIBE':
-            return {...state,
-                users: state.users.map(u => u.id === action.userId ? {...u, followed: !u.followed}: u)}
+            return {
+                ...state,
+                users: state.users.map(u => u.id === action.userId ? {...u, followed: !u.followed} : u)
+            }
         case 'SET-USERS':
             return {...state, users: action.users}
         case "CHANGE-CURRENT-PAGE":
@@ -41,6 +46,10 @@ export const usersReducer = (state: UsersPageType = initialState, action: AllAct
             return {...state, totalUsersCount: action.count}
         case "TOGGLE-IS-FETCHING":
             return {...state, isFetching: action.isFetching}
+        case "TOGGLE-IS-FOLLOWING":
+            return action.isFollowing
+                ? {...state, isFollowing: [...state.isFollowing, action.userId]}
+                : {...state, isFollowing: state.isFollowing.filter(u => u !== action.userId)}
         default: return state;
     }
 }
@@ -51,4 +60,9 @@ export const setUsersAC = (users: UserType[]) => ({type: 'SET-USERS', users} as 
 export const changeCurrentPageAC = (page: number) => ({type: 'CHANGE-CURRENT-PAGE', page} as const);
 export const setTotalUsersCountAC = (count: number) => ({type: 'SET-TOTAL-USERS-COUNT', count} as const);
 export const toggleIsFetchingAC = (isFetching: boolean) => ({type: 'TOGGLE-IS-FETCHING', isFetching} as const);
+export const toggleIsFollowingAC = (userId: number, isFollowing: boolean) => ({
+    type: 'TOGGLE-IS-FOLLOWING',
+    userId,
+    isFollowing
+} as const);
 

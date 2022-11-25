@@ -6,7 +6,7 @@ import {
     changeCurrentPageAC,
     setTotalUsersCountAC,
     setUsersAC,
-    toggleIsFetchingAC,
+    toggleIsFetchingAC, toggleIsFollowingAC,
     toggleSubscribeAC,
     UserType
 } from "../../redux/usersReducer";
@@ -44,6 +44,7 @@ class UsersContainerAPI extends React.Component<UsersPropsType> {
     }
 
     subscribeToggle = (userId: number) => {
+        this.props.onToggleIsFollowing(userId, true);
         followAPI.getFollow(userId)
             .then(data => {
                 if (data) {
@@ -52,6 +53,7 @@ class UsersContainerAPI extends React.Component<UsersPropsType> {
                             if (data.resultCode === 0) {
                                 this.props.onToggleSubscribe(userId)
                             }
+                            this.props.onToggleIsFollowing(userId, false);
                         })
                 } else {
                     followAPI.postFollow(userId)
@@ -59,6 +61,8 @@ class UsersContainerAPI extends React.Component<UsersPropsType> {
                             if (data.resultCode === 0) {
                                 this.props.onToggleSubscribe(userId)
                             }
+                            this.props.onToggleIsFollowing(userId, false);
+
                         })
                 }
             })
@@ -71,6 +75,7 @@ class UsersContainerAPI extends React.Component<UsersPropsType> {
             currentPage,
             totalUsersCount,
             isFetching,
+            isFollowing,
             onSetUsers,
         } = this.props;
 
@@ -81,6 +86,7 @@ class UsersContainerAPI extends React.Component<UsersPropsType> {
                 currentPage={currentPage}
                 totalUsersCount={totalUsersCount}
                 isFetching={isFetching}
+                isFollowing={isFollowing}
                 onToggleSubscribe={this.subscribeToggle}
                 onSetUsers={onSetUsers}
                 onClickChangeCurrentPage={this.onClickChangeCurrentPage}
@@ -96,6 +102,7 @@ type MapStateToPropsType = {
     currentPage: number
     totalUsersCount: number
     isFetching: boolean
+    isFollowing: number[]
 }
 
 type MapDispatchToPropsType = {
@@ -104,6 +111,7 @@ type MapDispatchToPropsType = {
     onChangeCurrenPage: (page: number) => void
     onSetTotalUsersCount: (count: number) => void
     onToggleIsFetching: (isFetching: boolean) => void
+    onToggleIsFollowing: (userId: number, isFollowing: boolean) => void
 }
 
 
@@ -113,6 +121,7 @@ const mapStateToProps = (state: StateType): MapStateToPropsType => ({
     currentPage: state.usersPage.currentPage,
     totalUsersCount: state.usersPage.totalUsersCount,
     isFetching: state.usersPage.isFetching,
+    isFollowing: state.usersPage.isFollowing
 });
 
 export const UsersContainer = connect(mapStateToProps, {
@@ -120,5 +129,6 @@ export const UsersContainer = connect(mapStateToProps, {
     onSetUsers: setUsersAC,
     onChangeCurrenPage: changeCurrentPageAC,
     onSetTotalUsersCount: setTotalUsersCountAC,
-    onToggleIsFetching: toggleIsFetchingAC
+    onToggleIsFetching: toggleIsFetchingAC,
+    onToggleIsFollowing: toggleIsFollowingAC,
 })(UsersContainerAPI);

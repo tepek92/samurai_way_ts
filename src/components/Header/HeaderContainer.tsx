@@ -16,8 +16,6 @@ class HeaderContainerAPI extends React.Component<HeaderPropsType> {
                     const {id, email, login} = data.data
                     this.props.setAuthUser(id, email, login);
                 }
-                console.log(data)
-
             });
     }
 
