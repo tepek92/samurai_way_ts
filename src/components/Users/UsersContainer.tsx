@@ -10,7 +10,7 @@ import {
     toggleSubscribeAC,
     UserType
 } from "../../redux/usersReducer";
-import axios from "axios";
+import {followAPI, usersAPI} from "../../api/api";
 
 
 type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType;
@@ -25,11 +25,8 @@ class UsersContainerAPI extends React.Component<UsersPropsType> {
     // вызывается, когда компонента вмонтировалась в разметку
     componentDidMount() {
         this.props.onToggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-            withCredentials: true
-        })
-            .then(response => {
-                const data: UserResponseType = response.data;
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
                 this.props.onSetUsers(data.items);
                 this.props.onSetTotalUsersCount(data.totalCount);
                 this.props.onToggleIsFetching(false);
@@ -38,38 +35,33 @@ class UsersContainerAPI extends React.Component<UsersPropsType> {
 
     onClickChangeCurrentPage = (page: number) => {
         this.props.onToggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`, {
-            withCredentials: true
-        })
-            .then(response => {
-                this.props.onSetUsers(response.data.items);
+        usersAPI.getUsers(page, this.props.pageSize)
+            .then(data => {
+                this.props.onSetUsers(data.items);
                 this.props.onToggleIsFetching(false);
             });
         this.props.onChangeCurrenPage(page);
     }
 
     subscribeToggle = (userId: number) => {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {
-            withCredentials: true
-        }).then(response => {
-            if (response.data) {
-                axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {
-                    withCredentials: true
-                }).then(response => {
-                    if (response.data.resultCode === 0) {
-                        this.props.onToggleSubscribe(userId)
-                    }
-                })
-            } else {
-                axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {}, {
-                    withCredentials: true
-                }).then(response => {
-                    if (response.data.resultCode === 0) {
-                        this.props.onToggleSubscribe(userId)
-                    }
-                })
-            }
-        })
+        followAPI.getFollow(userId)
+            .then(data => {
+                if (data) {
+                    followAPI.deleteFollow(userId)
+                        .then(data => {
+                            if (data.resultCode === 0) {
+                                this.props.onToggleSubscribe(userId)
+                            }
+                        })
+                } else {
+                    followAPI.postFollow(userId)
+                        .then(data => {
+                            if (data.resultCode === 0) {
+                                this.props.onToggleSubscribe(userId)
+                            }
+                        })
+                }
+            })
     }
 
     render() {
