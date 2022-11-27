@@ -1,10 +1,9 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {setUserProfileAC, UserProfileType} from "../../redux/profileReducer";
+import {getProfileThunkCreator, UserProfileType} from "../../redux/profileReducer";
 import {Profile} from "./Profile";
 import {StateType} from "../../redux/store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {profileAPI} from "../../api/api";
 
 
 type PathParamsType = {
@@ -17,11 +16,7 @@ class ProfileContainerAPI extends React.Component<ProfileContainerType> {
 
     componentDidMount() {
         const userId = this.props.match.params.userId ? this.props.match.params.userId : '24767';
-
-        profileAPI.getProfile(userId)
-            .then(data => {
-                this.props.setUserProfile(data);
-            });
+        this.props.getProfiler(userId);
     }
 
     render() {
@@ -36,7 +31,7 @@ export type MapStateType = {
 }
 
 export type MapDispatchType = {
-    setUserProfile: (profile: UserProfileType) => void
+    getProfiler: (userId: string) => void
 }
 
 const mapStateToProps = (state: StateType): MapStateType => {
@@ -44,4 +39,4 @@ const mapStateToProps = (state: StateType): MapStateType => {
 };
 
 
-export const ProfileContainer = connect(mapStateToProps, {setUserProfile: setUserProfileAC})(withRouter(ProfileContainerAPI))
+export const ProfileContainer = connect(mapStateToProps, {getProfiler: getProfileThunkCreator})(withRouter(ProfileContainerAPI))

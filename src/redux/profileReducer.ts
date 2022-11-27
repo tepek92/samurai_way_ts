@@ -1,5 +1,7 @@
 import {v1} from "uuid";
 import {PhotosUserType} from "./usersReducer";
+import {Dispatch} from "redux";
+import {profileAPI} from "../api/api";
 
 type AllActionsType =
     ReturnType<typeof addPostAC> |
@@ -69,3 +71,13 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Al
 export const addPostAC = () => ({type: "ADD-POST"} as const);
 export const updateTextPostAC = (newText: string) => ({type: "UPDATE-TEXT-POST", newText} as const);
 export const setUserProfileAC = (profile: UserProfileType) => ({type: "SET-USER-PROFILE", profile} as const);
+
+
+export const getProfileThunkCreator = (userId: string) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.getProfile(userId)
+            .then(data => {
+                dispatch(setUserProfileAC(data));
+            });
+    }
+}

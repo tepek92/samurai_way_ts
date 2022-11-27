@@ -14,7 +14,6 @@ type UsersPropsType = {
     isFetching: boolean
     isFollowing: number[]
     onToggleSubscribe: (userId: number) => void
-    onSetUsers: (users: UserType[]) => void
     onClickChangeCurrentPage: (page: number) => void
 }
 

@@ -1,9 +1,10 @@
 import {profileReducer} from "./profileReducer";
 import {dialogsReducer} from "./dialogsReducer";
-import {combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 import {sidebarReducer} from "./sidebarReducer";
 import {usersReducer} from "./usersReducer";
 import {authReducer} from "./authReducer";
+import thunkMiddleware from "redux-thunk"
 
 export type StateType = ReturnType<typeof rootReducers>
 export type StoreType = typeof store;
@@ -16,4 +17,6 @@ const rootReducers = combineReducers({
     auth: authReducer,
 });
 
-export const store = createStore(rootReducers);
+export const store = createStore(rootReducers, applyMiddleware(thunkMiddleware));
+
+// applyMiddleware(thunkMiddleware)

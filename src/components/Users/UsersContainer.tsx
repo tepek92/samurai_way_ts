@@ -4,68 +4,33 @@ import {Users} from "./Users";
 import {StateType} from "../../redux/store";
 import {
     changeCurrentPageAC,
-    setTotalUsersCountAC,
-    setUsersAC,
-    toggleIsFetchingAC, toggleIsFollowingAC,
-    toggleSubscribeAC,
+    getUsersThunkCreator,
+    subscribeToggleThunkCreator,
     UserType
 } from "../../redux/usersReducer";
-import {followAPI, usersAPI} from "../../api/api";
 
 
 type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType;
-type UserResponseType = {
-    items: UserType[]
-    totalCount: number
-    error: null
-}
+// type UserResponseType = {
+//     items: UserType[]
+//     totalCount: number
+//     error: null
+// }
 
 class UsersContainerAPI extends React.Component<UsersPropsType> {
 
     // вызывается, когда компонента вмонтировалась в разметку
     componentDidMount() {
-        this.props.onToggleIsFetching(true);
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.onSetUsers(data.items);
-                this.props.onSetTotalUsersCount(data.totalCount);
-                this.props.onToggleIsFetching(false);
-            });
+        this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
 
     onClickChangeCurrentPage = (page: number) => {
-        this.props.onToggleIsFetching(true);
-        usersAPI.getUsers(page, this.props.pageSize)
-            .then(data => {
-                this.props.onSetUsers(data.items);
-                this.props.onToggleIsFetching(false);
-            });
-        this.props.onChangeCurrenPage(page);
+        this.props.getUsers(page, this.props.pageSize);
+        this.props.changeCurrenPage(page);
     }
 
     subscribeToggle = (userId: number) => {
-        this.props.onToggleIsFollowing(userId, true);
-        followAPI.getFollow(userId)
-            .then(data => {
-                if (data) {
-                    followAPI.deleteFollow(userId)
-                        .then(data => {
-                            if (data.resultCode === 0) {
-                                this.props.onToggleSubscribe(userId)
-                            }
-                            this.props.onToggleIsFollowing(userId, false);
-                        })
-                } else {
-                    followAPI.postFollow(userId)
-                        .then(data => {
-                            if (data.resultCode === 0) {
-                                this.props.onToggleSubscribe(userId)
-                            }
-                            this.props.onToggleIsFollowing(userId, false);
-
-                        })
-                }
-            })
+        this.props.subscribeToggle(userId);
     }
 
     render() {
@@ -76,7 +41,6 @@ class UsersContainerAPI extends React.Component<UsersPropsType> {
             totalUsersCount,
             isFetching,
             isFollowing,
-            onSetUsers,
         } = this.props;
 
         return (
@@ -88,7 +52,6 @@ class UsersContainerAPI extends React.Component<UsersPropsType> {
                 isFetching={isFetching}
                 isFollowing={isFollowing}
                 onToggleSubscribe={this.subscribeToggle}
-                onSetUsers={onSetUsers}
                 onClickChangeCurrentPage={this.onClickChangeCurrentPage}
             />
         );
@@ -106,14 +69,10 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToPropsType = {
-    onToggleSubscribe: (userId: number) => void
-    onSetUsers: (users: UserType[]) => void
-    onChangeCurrenPage: (page: number) => void
-    onSetTotalUsersCount: (count: number) => void
-    onToggleIsFetching: (isFetching: boolean) => void
-    onToggleIsFollowing: (userId: number, isFollowing: boolean) => void
+    changeCurrenPage: (page: number) => void
+    getUsers: (page: number, pageSize: number) => void,
+    subscribeToggle: (userId: number) =>void
 }
-
 
 const mapStateToProps = (state: StateType): MapStateToPropsType => ({
     users: state.usersPage.users,
@@ -125,10 +84,7 @@ const mapStateToProps = (state: StateType): MapStateToPropsType => ({
 });
 
 export const UsersContainer = connect(mapStateToProps, {
-    onToggleSubscribe: toggleSubscribeAC,
-    onSetUsers: setUsersAC,
-    onChangeCurrenPage: changeCurrentPageAC,
-    onSetTotalUsersCount: setTotalUsersCountAC,
-    onToggleIsFetching: toggleIsFetchingAC,
-    onToggleIsFollowing: toggleIsFollowingAC,
+    changeCurrenPage: changeCurrentPageAC,
+    getUsers: getUsersThunkCreator,
+    subscribeToggle: subscribeToggleThunkCreator
 })(UsersContainerAPI);

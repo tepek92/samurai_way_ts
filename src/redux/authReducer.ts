@@ -1,6 +1,5 @@
-import {v1} from "uuid";
-import {PhotosUserType} from "./usersReducer";
-import {isNumberObject} from "util/types";
+import {Dispatch} from "redux";
+import {authAPI} from "../api/api";
 
 type AllActionsType = ReturnType<typeof setAuthUserAC>;
 
@@ -30,3 +29,15 @@ export const authReducer = (state: AuthStateType = initialState, action: AllActi
 }
 
 export const setAuthUserAC = (userId: number, email: string, login: string) => ({type: "SET-AUTH-USER", payload: {userId, email, login}} as const);
+
+export const getAuthMeThunkCreator = () => {
+    return (dispatch: Dispatch) => {
+        authAPI.getAuthMe()
+            .then(data => {
+                if (data.resultCode === 0) {
+                    const {id, email, login} = data.data
+                    dispatch(setAuthUserAC(id, email, login));
+                }
+            })
+    }
+}

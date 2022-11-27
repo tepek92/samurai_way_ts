@@ -1,3 +1,6 @@
+import {followAPI, usersAPI} from "../api/api";
+import {Dispatch} from "redux";
+
 type AllActionsType =
     ReturnType<typeof toggleSubscribeAC> |
     ReturnType<typeof setUsersAC> |
@@ -50,7 +53,8 @@ export const usersReducer = (state: UsersPageType = initialState, action: AllAct
             return action.isFollowing
                 ? {...state, isFollowing: [...state.isFollowing, action.userId]}
                 : {...state, isFollowing: state.isFollowing.filter(u => u !== action.userId)}
-        default: return state;
+        default:
+            return state;
     }
 }
 
@@ -66,3 +70,42 @@ export const toggleIsFollowingAC = (userId: number, isFollowing: boolean) => ({
     isFollowing
 } as const);
 
+
+export const getUsersThunkCreator = (page: number, pageSize: number) => {
+    return (dispatch: Dispatch) => {
+        dispatch(toggleIsFetchingAC(true));
+        usersAPI.getUsers(page, pageSize)
+            .then(data => {
+                dispatch(setUsersAC(data.items));
+                dispatch(setTotalUsersCountAC(data.totalCount));
+                dispatch(toggleIsFetchingAC(false));
+            })
+    }
+}
+
+export const subscribeToggleThunkCreator = (userId: number) => {
+    return (dispatch: Dispatch) => {
+        dispatch(toggleIsFollowingAC(userId, true));
+        followAPI.getFollow(userId)
+            .then(data => {
+                if (data) {
+                    followAPI.deleteFollow(userId)
+                        .then(data => {
+                            if (data.resultCode === 0) {
+                                dispatch(toggleSubscribeAC(userId));
+                            }
+                            dispatch(toggleIsFollowingAC(userId, false));
+                        })
+                } else {
+                    followAPI.postFollow(userId)
+                        .then(data => {
+                            if (data.resultCode === 0) {
+                                dispatch(toggleSubscribeAC(userId));
+                            }
+                            dispatch(toggleIsFollowingAC(userId, false));
+
+                        })
+                }
+            })
+    }
+}
