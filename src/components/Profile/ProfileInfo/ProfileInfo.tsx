@@ -1,11 +1,11 @@
 import React from 'react'
 import style from './ProfileInfo.module.css'
-import {MapStateType} from "../ProfileContainer";
 import {Preloader} from "../../common/Preloader/Preloader";
 import avatar from '../../../img/samurai2.png'
+import {ProfilePropsType} from "../Profile";
 
 
-export function ProfileInfo(props: MapStateType) {
+export function ProfileInfo(props: ProfilePropsType) {
     const {profile} = props;
 
     return (

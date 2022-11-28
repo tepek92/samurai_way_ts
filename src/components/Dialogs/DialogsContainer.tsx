@@ -8,10 +8,11 @@ import {Dispatch} from "redux";
 const mapStateToProps = (state: StateType): Omit<DialogsPropsType, 'onChangeHandler' | 'onClickHandler'> => ({
     dialogs: state.dialogsPage.dialogs,
     messages: state.dialogsPage.messages,
-    textMessage: state.dialogsPage.textMessage
+    textMessage: state.dialogsPage.textMessage,
+    isAuth: state.auth.isAuth
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): Omit<DialogsPropsType, 'dialogs' | 'messages' | 'textMessage'> => ({
+const mapDispatchToProps = (dispatch: Dispatch): Omit<DialogsPropsType, 'dialogs' | 'messages' | 'textMessage'| 'isAuth'> => ({
     onChangeHandler: (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(updateTextMessageAC(e.currentTarget.value)),
     onClickHandler: () => dispatch(addMessageAC())
 });
