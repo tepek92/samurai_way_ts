@@ -3,6 +3,7 @@ import style from './ProfileInfo.module.css'
 import {Preloader} from "../../common/Preloader/Preloader";
 import avatar from '../../../img/samurai2.png'
 import {ProfilePropsType} from "../Profile";
+import {ProfileStatus} from "./ProfileStatus/ProfileStatus";
 
 
 export function ProfileInfo(props: ProfilePropsType) {
@@ -16,7 +17,7 @@ export function ProfileInfo(props: ProfilePropsType) {
                      src={profile.photos.large ? profile.photos.large : avatar} alt={''}/>
                 <div className={style.info}>
                     <p className={style.name}><b>{profile.fullName ? profile.fullName : 'Samurai'}</b></p>
-                    <p><b>Статус: </b>{profile.aboutMe ? profile.aboutMe : "Нет статуса:("}</p>
+                    <ProfileStatus aboutMe={profile.aboutMe}/>
                     <p><b>Ищет работу: </b>{profile.lookingForAJob ? profile.lookingForAJobDescription : "Уже работаю:)"}</p>
                 </div>
             </div>
