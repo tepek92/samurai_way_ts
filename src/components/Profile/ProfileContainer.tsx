@@ -52,7 +52,7 @@ const mapStateToProps = (state: StateType): MapStateType => {
 
 export const ProfileContainer = compose<ComponentType>
 (
-    withRedirect,
+    // withRedirect,
     withRouter,
     connect(mapStateToProps, {
         getProfiler: getProfileThunkCreator,
