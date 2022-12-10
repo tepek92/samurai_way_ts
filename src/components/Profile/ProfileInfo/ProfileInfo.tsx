@@ -7,7 +7,7 @@ import {ProfileStatus} from "./ProfileStatus/ProfileStatus";
 
 
 export function ProfileInfo(props: ProfilePropsType) {
-    const {profile} = props;
+    const {profile, status, updateStatus} = props;
 
     return (
         !profile.userId
@@ -17,8 +17,10 @@ export function ProfileInfo(props: ProfilePropsType) {
                      src={profile.photos.large ? profile.photos.large : avatar} alt={''}/>
                 <div className={style.info}>
                     <p className={style.name}><b>{profile.fullName ? profile.fullName : 'Samurai'}</b></p>
-                    <ProfileStatus aboutMe={profile.aboutMe}/>
+                    <p><b>Обо мне: </b>{profile.aboutMe ? profile.aboutMe : "Пытаюсь стать програмистом"}</p>
                     <p><b>Ищет работу: </b>{profile.lookingForAJob ? profile.lookingForAJobDescription : "Уже работаю:)"}</p>
+                    <br/>
+                    <ProfileStatus status={status} updateStatus={updateStatus}/>
                 </div>
             </div>
     );

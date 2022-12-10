@@ -1,6 +1,11 @@
 import React, {ComponentType} from 'react';
 import {connect} from "react-redux";
-import {getProfileThunkCreator, UserProfileType} from "../../redux/profileReducer";
+import {
+    getProfileThunkCreator,
+    getUserStatusThunkCreator,
+    updateUserStatusThunkCreator,
+    UserProfileType
+} from "../../redux/profileReducer";
 import {Profile} from "./Profile";
 import {StateType} from "../../redux/store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
@@ -19,24 +24,29 @@ class ProfileContainerAPI extends React.Component<ProfileContainerType> {
     componentDidMount() {
         const userId = this.props.match.params.userId ? this.props.match.params.userId : '24767';
         this.props.getProfiler(userId);
+        this.props.getStatus(userId);
     }
 
     render() {
-        return <Profile profile={this.props.profile}/>
+        return <Profile profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus}/>
     }
 }
 
 export type MapStateType = {
     profile: UserProfileType
+    status: string
 }
 
 export type MapDispatchType = {
     getProfiler: (userId: string) => void
+    getStatus: (userId: string) => void
+    updateStatus: (status: string) => void
 }
 
 const mapStateToProps = (state: StateType): MapStateType => {
     return {
         profile: state.profilePage.profile,
+        status: state.profilePage.status
     }
 };
 
@@ -44,5 +54,9 @@ export const ProfileContainer = compose<ComponentType>
 (
     withRedirect,
     withRouter,
-    connect(mapStateToProps, {getProfiler: getProfileThunkCreator})
+    connect(mapStateToProps, {
+        getProfiler: getProfileThunkCreator,
+        getStatus: getUserStatusThunkCreator,
+        updateStatus: updateUserStatusThunkCreator
+    })
 )(ProfileContainerAPI)
