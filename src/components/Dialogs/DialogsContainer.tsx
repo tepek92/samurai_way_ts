@@ -4,12 +4,12 @@ import {Dialogs, DialogsPropsType} from "./Dialogs";
 import {StateType} from "../../redux/store";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
+import {withRedirect} from "../../hok/withRedirect";
 
 const mapStateToProps = (state: StateType): Omit<DialogsPropsType, 'onChangeHandler' | 'onClickHandler'> => ({
     dialogs: state.dialogsPage.dialogs,
     messages: state.dialogsPage.messages,
     textMessage: state.dialogsPage.textMessage,
-    isAuth: state.auth.isAuth
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Omit<DialogsPropsType, 'dialogs' | 'messages' | 'textMessage'| 'isAuth'> => ({
@@ -17,4 +17,4 @@ const mapDispatchToProps = (dispatch: Dispatch): Omit<DialogsPropsType, 'dialogs
     onClickHandler: () => dispatch(addMessageAC())
 });
 
-export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(withRedirect(Dialogs));
