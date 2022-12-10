@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import {connect} from "react-redux";
 import {getProfileThunkCreator, UserProfileType} from "../../redux/profileReducer";
 import {Profile} from "./Profile";
 import {StateType} from "../../redux/store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withRedirect} from "../../hok/withRedirect";
+import {compose} from "redux";
 
 
 type PathParamsType = {
@@ -39,7 +40,9 @@ const mapStateToProps = (state: StateType): MapStateType => {
     }
 };
 
-const withRedirectProfile = withRedirect(ProfileContainerAPI)
-
-
-export const ProfileContainer = connect(mapStateToProps, {getProfiler: getProfileThunkCreator})(withRouter(withRedirectProfile))
+export const ProfileContainer = compose<ComponentType>
+(
+    withRedirect,
+    withRouter,
+    connect(mapStateToProps, {getProfiler: getProfileThunkCreator})
+)(ProfileContainerAPI)
