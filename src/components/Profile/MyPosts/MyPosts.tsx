@@ -1,28 +1,52 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import {Post} from "./Post/Post";
 import {PostType, UserProfileType} from "../../../redux/profileReducer";
-// import style from './MyPosts.module.css'
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
 
 export type MyPostsPropsType = {
     posts: PostType[]
-    textPost: string
-    onChangeHandler: (e: ChangeEvent<HTMLTextAreaElement>) => void
-    onClickHandler: () => void
+    onClickHandler: (postText: string) => void
     profile: UserProfileType
 };
 
 export function MyPosts(props: MyPostsPropsType) {
-    const {posts, textPost, profile, onChangeHandler, onClickHandler} = props;
+    const {posts, profile, onClickHandler} = props;
 
     const postsElement = posts.map(p => <Post key={p.id} text={p.text} like={p.like} profile={profile}/>);
+
+    const onSubmit = (formData: FormDataPostType) => {
+        onClickHandler(formData.postTex);
+    }
 
     return (
         <div>
             <p><b>My post</b></p>
-            <textarea onChange={onChangeHandler} value={textPost}></textarea>
-            <div><button onClick={onClickHandler}>add post</button></div>
+            <PostFormWithFom onSubmit={onSubmit}/>
             {postsElement}
         </div>
     );
 }
+
+// ==========================
+type FormDataPostType = {
+    postTex: string
+}
+
+function MyPostsForm(props: InjectedFormProps<FormDataPostType>) {
+    const {handleSubmit} = props;
+    return (
+        <form onSubmit={handleSubmit}>
+            <div>
+                <Field component="textarea" name="postTex"></Field>
+                <div>
+                    <button>add post</button>
+                </div>
+            </div>
+        </form>
+    );
+}
+
+const PostFormWithFom = reduxForm<FormDataPostType>({
+    form: 'posts'
+})(MyPostsForm);

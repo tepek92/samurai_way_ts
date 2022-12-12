@@ -2,10 +2,10 @@ import {v1} from "uuid";
 import {PhotosUserType} from "./usersReducer";
 import {Dispatch} from "redux";
 import {profileAPI} from "../api/api";
+import {reset} from "redux-form";
 
 type AllActionsType =
     ReturnType<typeof addPostAC> |
-    ReturnType<typeof updateTextPostAC> |
     ReturnType<typeof setUserProfileAC> |
     ReturnType<typeof setUserStatusAC>;
 
@@ -45,7 +45,6 @@ const initialState = {
         {id: v1(), text: "Good day!", like: 5},
         {id: v1(), text: "Hello!", like: 1},
     ] as PostType[],
-    textPost: "" as string,
     profile: {} as UserProfileType,
     status: "" as string
 };
@@ -55,12 +54,8 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Al
         case "ADD-POST":
             return {
                 ...state,
-                posts: [...state.posts, {id: v1(), text: state.textPost, like: 0}],
-                textPost: ""
+                posts: [...state.posts, {id: v1(), text: action.postText, like: 0}],
             };
-        case "UPDATE-TEXT-POST": {
-            return {...state, textPost: action.newText};
-        }
         case "SET-USER-PROFILE": {
             return {...state, profile: action.profile};
         }
@@ -72,10 +67,16 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Al
     }
 }
 
-export const addPostAC = () => ({type: "ADD-POST"} as const);
-export const updateTextPostAC = (newText: string) => ({type: "UPDATE-TEXT-POST", newText} as const);
+export const addPostAC = (postText: string) => ({type: "ADD-POST", postText} as const);
 export const setUserProfileAC = (profile: UserProfileType) => ({type: "SET-USER-PROFILE", profile} as const);
 export const setUserStatusAC = (status: string) => ({type: "SET-STATUS-PROFILE", status} as const);
+
+export const addPostTC = (postText: string) => {
+    return (dispatch: Dispatch) => {
+        dispatch(addPostAC(postText));
+        dispatch(reset('posts'));
+    }
+}
 
 
 export const getProfileThunkCreator = (userId: string) => {

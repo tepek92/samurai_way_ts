@@ -1,19 +1,33 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import style from './SenderMessage.module.css';
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
-type SenderMessagePropsType = {
-    textMessage: string
-    onChangeHandler: (e: ChangeEvent<HTMLTextAreaElement>) => void
-    onClickHandler: () => void
+
+export type FormDataSenderType = {
+    messageText: string
 }
 
-export function SenderMessage(props: SenderMessagePropsType) {
-    const {textMessage, onChangeHandler, onClickHandler} = props;
-
+function SenderMessage(props: InjectedFormProps<FormDataSenderType>) {
+    const {handleSubmit} = props;
     return (
-        <div className={style.content}>
-            <div><textarea onChange={onChangeHandler} value={textMessage} className={style.sender}></textarea></div>
-            <div><button onClick={onClickHandler} className={style.button}>ADD</button></div>
-        </div>
+        <form className={style.content} onSubmit={handleSubmit}>
+            <div>
+                <Field
+                    name="messageText"
+                    component="textarea"
+                    className={style.sender}>
+
+                </Field>
+            </div>
+            <div>
+                <button className={style.button}>
+                    ADD
+                </button>
+            </div>
+        </form>
     );
 }
+
+export const SenderFormWithFom = reduxForm<FormDataSenderType>({
+    form: 'dialogs'
+})(SenderMessage);

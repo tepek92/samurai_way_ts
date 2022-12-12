@@ -1,8 +1,9 @@
 import {v1} from "uuid";
+import {Dispatch} from "redux";
+import {reset} from "redux-form";
 
 type AllActionsType =
-    ReturnType<typeof addMessageAC> |
-    ReturnType<typeof updateTextMessageAC>
+    ReturnType<typeof addMessageAC>;
 
 export type DialogType = {
     id: string
@@ -44,7 +45,6 @@ const initialState = {
                 sender: "owner"
             },
         ] as MessageType[],
-        textMessage: '' as string,
     };
 
 export const dialogsReducer = (state: DialogsPageType = initialState, action: AllActionsType): DialogsPageType => {
@@ -54,20 +54,23 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Al
                 id: v1(),
                 avatar: "https://i.pinimg.com/originals/9c/77/46/9c7746225873e02d83b9315501b8dd2f.jpg",
                 name: "Pasha",
-                message: state.textMessage,
+                message: action.messageText,
                 time: "22:50",
                 sender: "owner"
             };
-            return {...state,
-                messages: [...state.messages, newMessage],
-                textMessage: ''};
-        case "UPDATE-TEXT-MESSAGE":
-            return  {...state, textMessage: action.newText};
+            return {...state, messages: [...state.messages, newMessage]};
         default: return state;
     }
 
 }
 
-export const addMessageAC = () => ({type: "ADD-MESSAGE"} as const);
-export const updateTextMessageAC = (newText: string) => ({type: "UPDATE-TEXT-MESSAGE", newText} as const);
+export const addMessageAC = (messageText: string) => ({type: "ADD-MESSAGE", messageText} as const);
+
+
+export const addMessageTC = (messageText: string) => {
+    return (dispatch: Dispatch) => {
+        dispatch(addMessageAC(messageText));
+        dispatch(reset('dialogs'));
+    }
+}
 

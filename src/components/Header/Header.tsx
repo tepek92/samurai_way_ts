@@ -5,7 +5,11 @@ import {HeaderPropsType} from "./HeaderContainer";
 
 
 export function Header(props: HeaderPropsType) {
-    const {login, isAuth} = props;
+    const {login, isAuth, deleteLogin} = props;
+
+    const onClickHandler = () => {
+        deleteLogin();
+    }
     return (
         <header className={style.header}>
             <div>
@@ -18,7 +22,11 @@ export function Header(props: HeaderPropsType) {
             </div>
             {isAuth
                 ?
-                <div>samurai {login}</div>
+                <div>
+                    <div>
+                        {login} <button onClick={onClickHandler}>log out</button>
+                    </div>
+                </div>
                 :
                 <div>
                     <NavLink className={style.link} to={"/login"}>LOGIN</NavLink>

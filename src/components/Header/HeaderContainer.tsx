@@ -1,7 +1,7 @@
 import React from 'react';
 import {Header} from "./Header";
 import {connect} from "react-redux";
-import {getAuthMeThunkCreator} from "../../redux/authReducer";
+import {deleteLoginMeThunkCreator, getAuthMeThunkCreator} from "../../redux/authReducer";
 import {StateType} from "../../redux/store";
 
 export type HeaderPropsType = MapState & MapDispatch;
@@ -30,7 +30,11 @@ const mapStateToProps = (state: StateType): MapState => ({
 
 type MapDispatch = {
     getAuthUser: () => void
+    deleteLogin: () => void
 }
 
 export const HeaderContainer = connect(mapStateToProps,
-    {getAuthUser: getAuthMeThunkCreator})(HeaderContainerAPI);
+    {
+        getAuthUser: getAuthMeThunkCreator,
+        deleteLogin: deleteLoginMeThunkCreator
+    })(HeaderContainerAPI);
