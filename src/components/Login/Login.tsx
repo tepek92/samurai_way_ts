@@ -2,6 +2,8 @@ import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import {setLoginMeThunkCreator} from "../../redux/authReducer";
+import {FormController} from "../common/FormController/FormController";
+import {maxLength, required} from "../../utils/valodators/validator";
 
 type FormDataType = {
     login: string
@@ -31,16 +33,33 @@ function Login(props: PropsType) {
 }
 
 // =====================
+const maxLength10 = maxLength(10);
 
 function LoginForm(props: InjectedFormProps<FormDataType>) {
     const {handleSubmit} = props;
     return (
         <form onSubmit={handleSubmit}>
-            <Field name="login" placeholder="login" component="input"/>
+            <Field
+                name="login"
+                placeholder="login"
+                component={FormController}
+                Element="input"
+                validate={[required]}
+            />
             <br/>
-            <Field name="password" type="password" placeholder="password" component="input"/>
+            <Field
+                name="password"
+                type="password"
+                placeholder="password"
+                component={FormController}
+                Element="input"
+                validate={[required]}
+            />
             <br/>
-            <Field name="rememberMe" type="checkbox" component="input"/>
+            <Field
+                name="rememberMe"
+                type="checkbox"
+                component="input"/>
             <br/>
             <button>login</button>
         </form>
