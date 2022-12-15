@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {authAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 type AllActionsType =
     ReturnType<typeof setAuthUserAC> |
@@ -65,6 +66,9 @@ export const setLoginMeThunkCreator = (email: string, password: string, remember
                                 dispatch(setAuthUserAC(id, email, login));
                             }
                         })
+                } else {
+                    const message = data.messages[0].length > 0 ? data.messages[0] : 'Some error'
+                    dispatch(stopSubmit("login", {_error: message}))
                 }
             })
     }

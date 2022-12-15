@@ -22,7 +22,10 @@ class ProfileContainerAPI extends React.Component<ProfileContainerType> {
 
 
     componentDidMount() {
-        const userId = this.props.match.params.userId ? this.props.match.params.userId : '24767';
+        const userId =
+            this.props.match.params.userId
+                ? this.props.match.params.userId
+                : this.props.userLoginId + ''
         this.props.getProfiler(userId);
         this.props.getStatus(userId);
     }
@@ -35,6 +38,8 @@ class ProfileContainerAPI extends React.Component<ProfileContainerType> {
 export type MapStateType = {
     profile: UserProfileType
     status: string
+    userLoginId: number | null
+
 }
 
 export type MapDispatchType = {
@@ -46,7 +51,8 @@ export type MapDispatchType = {
 const mapStateToProps = (state: StateType): MapStateType => {
     return {
         profile: state.profilePage.profile,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        userLoginId: state.auth.userId
     }
 };
 

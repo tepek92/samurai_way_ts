@@ -3,7 +3,10 @@ import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import {setLoginMeThunkCreator} from "../../redux/authReducer";
 import {FormController} from "../common/FormController/FormController";
-import {maxLength, required} from "../../utils/valodators/validator";
+import {required} from "../../utils/valodators/validator";
+import {StateType} from "../../redux/store";
+import {Redirect} from "react-router-dom";
+import s from "../common/FormController/FormController.module.css"
 
 type FormDataType = {
     login: string
@@ -13,30 +16,29 @@ type FormDataType = {
 
 type PropsType = {
     setLogin: (email: string, password: string, rememberMe: boolean) => void
-}
+} & MSTPType;
 
 function Login(props: PropsType) {
-    const {setLogin} = props;
+    const {setLogin, isAuth} = props;
 
     const onSubmit = (formData: FormDataType) => {
         const {login, password, rememberMe} = formData;
-        console.log(formData);
         setLogin(login, password, rememberMe);
     }
 
     return (
-        <div>
-            LOGIN
-            <LoginFormWithFom onSubmit={onSubmit}/>
-        </div>
+        isAuth
+            ? <Redirect to={'/profile'}/>
+            : <div>
+                LOGIN
+                <LoginFormWithFom onSubmit={onSubmit}/>
+            </div>
     );
 }
 
 // =====================
-const maxLength10 = maxLength(10);
-
 function LoginForm(props: InjectedFormProps<FormDataType>) {
-    const {handleSubmit} = props;
+    const {handleSubmit, error} = props;
     return (
         <form onSubmit={handleSubmit}>
             <Field
@@ -62,6 +64,7 @@ function LoginForm(props: InjectedFormProps<FormDataType>) {
                 component="input"/>
             <br/>
             <button>login</button>
+            {error && <div className={s.allError}>{error}</div>}
         </form>
     );
 }
@@ -71,6 +74,13 @@ const LoginFormWithFom = reduxForm<FormDataType>({
 })(LoginForm);
 
 
-export const LoginContainer = connect(null, {setLogin: setLoginMeThunkCreator})(Login)
+type MSTPType = {
+    isAuth: boolean
+}
+const mapStateToProps = (state: StateType): MSTPType => ({
+    isAuth: state.auth.isAuth
+});
+
+export const LoginContainer = connect(mapStateToProps, {setLogin: setLoginMeThunkCreator})(Login);
 
 
