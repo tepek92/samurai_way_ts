@@ -1,8 +1,9 @@
 import {v1} from "uuid";
 import {Dispatch} from "redux";
 import {reset} from "redux-form";
+import {ThunkType} from "./store";
 
-type AllActionsType =
+export type DialogsActionsType =
     ReturnType<typeof addMessageAC>;
 
 export type DialogType = {
@@ -47,7 +48,7 @@ const initialState = {
         ] as MessageType[],
     };
 
-export const dialogsReducer = (state: DialogsPageType = initialState, action: AllActionsType): DialogsPageType => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsActionsType): DialogsPageType => {
     switch (action.type) {
         case "ADD-MESSAGE":
             const newMessage: MessageType = {
@@ -67,7 +68,7 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Al
 export const addMessageAC = (messageText: string) => ({type: "ADD-MESSAGE", messageText} as const);
 
 
-export const addMessageTC = (messageText: string) => {
+export const addMessageTC = (messageText: string): ThunkType => {
     return (dispatch: Dispatch) => {
         dispatch(addMessageAC(messageText));
         dispatch(reset('dialogs'));

@@ -1,7 +1,8 @@
 import {followAPI, usersAPI} from "../api/api";
 import {Dispatch} from "redux";
+import {ThunkType} from "./store";
 
-type AllActionsType =
+export type UserActionsType =
     ReturnType<typeof toggleSubscribeAC> |
     ReturnType<typeof setUsersAC> |
     ReturnType<typeof changeCurrentPageAC> |
@@ -34,7 +35,7 @@ const initialState = {
 export type UsersPageType = typeof initialState;
 
 
-export const usersReducer = (state: UsersPageType = initialState, action: AllActionsType): UsersPageType => {
+export const usersReducer = (state: UsersPageType = initialState, action: UserActionsType): UsersPageType => {
     switch (action.type) {
         case 'TOGGLE-SUBSCRIBE':
             return {
@@ -71,7 +72,7 @@ export const toggleIsFollowingAC = (userId: number, isFollowing: boolean) => ({
 } as const);
 
 
-export const getUsersThunkCreator = (page: number, pageSize: number) => {
+export const getUsersThunkCreator = (page: number, pageSize: number): ThunkType => {
     return (dispatch: Dispatch) => {
         dispatch(toggleIsFetchingAC(true));
         usersAPI.getUsers(page, pageSize)
@@ -83,7 +84,7 @@ export const getUsersThunkCreator = (page: number, pageSize: number) => {
     }
 }
 
-export const subscribeToggleThunkCreator = (userId: number) => {
+export const subscribeToggleThunkCreator = (userId: number): ThunkType => {
     return (dispatch: Dispatch) => {
         dispatch(toggleIsFollowingAC(userId, true));
         followAPI.getFollow(userId)

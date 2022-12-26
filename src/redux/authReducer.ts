@@ -1,8 +1,9 @@
 import {Dispatch} from "redux";
 import {authAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
+import {ThunkType} from "./store";
 
-type AllActionsType =
+export type AuthActionsType =
     ReturnType<typeof setAuthUserAC> |
     ReturnType<typeof deleteAuthUserAC>;
 
@@ -22,7 +23,7 @@ const initialState = {
     isAuth: false
 };
 
-export const authReducer = (state: AuthStateType = initialState, action: AllActionsType): AuthStateType => {
+export const authReducer = (state: AuthStateType = initialState, action: AuthActionsType): AuthStateType => {
     switch (action.type) {
         case "SET-AUTH-USER":
             return {...state, ...action.payload, isAuth: true}
@@ -44,7 +45,7 @@ export const deleteAuthUserAC = () => ({
 
 export const getAuthMeThunkCreator = () => {
     return (dispatch: Dispatch) => {
-        authAPI.getAuthMe()
+        return authAPI.getAuthMe()
             .then(data => {
                 if (data.resultCode === 0) {
                     const {id, email, login} = data.data
@@ -54,7 +55,7 @@ export const getAuthMeThunkCreator = () => {
     }
 }
 
-export const setLoginMeThunkCreator = (email: string, password: string, rememberMe: boolean) => {
+export const setLoginMeThunkCreator = (email: string, password: string, rememberMe: boolean): ThunkType => {
     return (dispatch: Dispatch) => {
         authAPI.setLoginMe(email, password, rememberMe)
             .then(data => {
@@ -74,7 +75,7 @@ export const setLoginMeThunkCreator = (email: string, password: string, remember
     }
 }
 
-export const deleteLoginMeThunkCreator = () => {
+export const deleteLoginMeThunkCreator = (): ThunkType => {
     return (dispatch: Dispatch) => {
         authAPI.deleteLoginMe()
             .then(data => {

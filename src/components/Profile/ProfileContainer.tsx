@@ -25,9 +25,15 @@ class ProfileContainerAPI extends React.Component<ProfileContainerType> {
         const userId =
             this.props.match.params.userId
                 ? this.props.match.params.userId
-                : this.props.userLoginId + ''
-        this.props.getProfiler(userId);
-        this.props.getStatus(userId);
+                : this.props.userLoginId
+        if(userId === null) {
+            this.props.history.push('/login');
+        } else {
+            console.log(userId)
+
+            this.props.getProfiler(userId+'');
+            this.props.getStatus(userId+'');
+        }
     }
 
     render() {
@@ -58,8 +64,8 @@ const mapStateToProps = (state: StateType): MapStateType => {
 
 export const ProfileContainer = compose<ComponentType>
 (
-    // withRedirect,
     withRouter,
+    // withRedirect,
     connect(mapStateToProps, {
         getProfiler: getProfileThunkCreator,
         getStatus: getUserStatusThunkCreator,

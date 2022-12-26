@@ -7,7 +7,7 @@ export type BestFriendsType = {
 }
 export type SideBarType = typeof initialState
 
-type AllActionsType = {type: "TEST"};
+export type SidebarActionsType = {type: "TEST"};
 
 const initialState = {
     bestFriends: [
@@ -17,6 +17,6 @@ const initialState = {
     ] as BestFriendsType[],
 }
 
-export const sidebarReducer = (state: SideBarType = initialState, action: AllActionsType): SideBarType  => {
+export const sidebarReducer = (state: SideBarType = initialState, action: SidebarActionsType): SideBarType  => {
     return state
 }

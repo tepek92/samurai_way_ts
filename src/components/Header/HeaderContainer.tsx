@@ -9,7 +9,7 @@ export type HeaderPropsType = MapState & MapDispatch;
 class HeaderContainerAPI extends React.Component<HeaderPropsType> {
 
     componentDidMount() {
-        this.props.getAuthUser();
+        // this.props.getAuthUser();
     }
 
     render() {
