@@ -2,6 +2,7 @@ import {addPostTC, PostType, UserProfileType} from "../../../redux/profileReduce
 import {StateType} from "../../../redux/store";
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
+import {getPosts, getProfile} from "../../../selectors/profileSelectors";
 
 type MSTPMyPostsType = {
     posts: PostType[]
@@ -9,8 +10,8 @@ type MSTPMyPostsType = {
 }
 
 const mapStateToProps = (state: StateType): MSTPMyPostsType => ({
-    posts: state.profilePage.posts,
-    profile: state.profilePage.profile
+    posts: getPosts(state),
+    profile: getProfile(state)
 });
 
 export const MyPostsContainer = connect(mapStateToProps, {

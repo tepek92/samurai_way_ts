@@ -5,6 +5,7 @@ import {StateType} from "../../redux/store";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {withRedirect} from "../../hok/withRedirect";
+import {getDialogs, getMessages} from "../../selectors/dialogsSelectors";
 
 export type MSTPDialogsType = {
     dialogs: DialogType[]
@@ -12,8 +13,8 @@ export type MSTPDialogsType = {
 }
 
 const mapStateToProps = (state: StateType): MSTPDialogsType => ({
-    dialogs: state.dialogsPage.dialogs,
-    messages: state.dialogsPage.messages,
+    dialogs: getDialogs(state),
+    messages: getMessages(state),
 });
 
 

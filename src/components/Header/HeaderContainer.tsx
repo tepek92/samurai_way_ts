@@ -3,6 +3,7 @@ import {Header} from "./Header";
 import {connect} from "react-redux";
 import {deleteLoginMeThunkCreator, getAuthMeThunkCreator} from "../../redux/authReducer";
 import {StateType} from "../../redux/store";
+import {getIsAuth, getLogin} from "../../selectors/authSelectors";
 
 export type HeaderPropsType = MapState & MapDispatch;
 
@@ -24,8 +25,8 @@ type MapState = {
     isAuth: boolean
 }
 const mapStateToProps = (state: StateType): MapState => ({
-    login: state.auth.login,
-    isAuth: state.auth.isAuth
+    login: getLogin(state),
+    isAuth: getIsAuth(state)
 });
 
 type MapDispatch = {

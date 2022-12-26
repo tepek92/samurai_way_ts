@@ -7,6 +7,7 @@ import {required} from "../../utils/valodators/validator";
 import {StateType} from "../../redux/store";
 import {Redirect} from "react-router-dom";
 import s from "../common/FormController/FormController.module.css"
+import {getIsAuth} from "../../selectors/authSelectors";
 
 type FormDataType = {
     login: string
@@ -78,7 +79,7 @@ type MSTPType = {
     isAuth: boolean
 }
 const mapStateToProps = (state: StateType): MSTPType => ({
-    isAuth: state.auth.isAuth
+    isAuth: getIsAuth(state)
 });
 
 export const LoginContainer = connect(mapStateToProps, {setLogin: setLoginMeThunkCreator})(Login);

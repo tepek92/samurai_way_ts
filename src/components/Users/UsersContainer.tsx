@@ -8,6 +8,13 @@ import {
     subscribeToggleThunkCreator,
     UserType
 } from "../../redux/usersReducer";
+import {
+    getCurrentPage,
+    getIsFetching, getIsFollowing,
+    getPageSizePage,
+    getTotalUsersCount,
+    getUsers
+} from "../../selectors/usersSelectors";
 
 
 type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType;
@@ -75,12 +82,12 @@ type MapDispatchToPropsType = {
 }
 
 const mapStateToProps = (state: StateType): MapStateToPropsType => ({
-    users: state.usersPage.users,
-    pageSize: state.usersPage.pageSize,
-    currentPage: state.usersPage.currentPage,
-    totalUsersCount: state.usersPage.totalUsersCount,
-    isFetching: state.usersPage.isFetching,
-    isFollowing: state.usersPage.isFollowing
+    users: getUsers(state),
+    pageSize: getPageSizePage(state),
+    currentPage: getCurrentPage(state),
+    totalUsersCount: getTotalUsersCount(state),
+    isFetching: getIsFetching(state),
+    isFollowing: getIsFollowing(state)
 });
 
 export const UsersContainer = connect(mapStateToProps, {

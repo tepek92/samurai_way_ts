@@ -11,6 +11,8 @@ import {StateType} from "../../redux/store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withRedirect} from "../../hok/withRedirect";
 import {compose} from "redux";
+import {getProfile, getStatus} from "../../selectors/profileSelectors";
+import {getUserLoginId} from "../../selectors/authSelectors";
 
 
 type PathParamsType = {
@@ -56,9 +58,9 @@ export type MapDispatchType = {
 
 const mapStateToProps = (state: StateType): MapStateType => {
     return {
-        profile: state.profilePage.profile,
-        status: state.profilePage.status,
-        userLoginId: state.auth.userId
+        profile: getProfile(state),
+        status: getStatus(state),
+        userLoginId: getUserLoginId(state)
     }
 };
 
