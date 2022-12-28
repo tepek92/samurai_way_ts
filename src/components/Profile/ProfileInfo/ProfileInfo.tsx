@@ -4,6 +4,7 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import avatar from '../../../img/samurai2.png'
 import {ProfilePropsType} from "../Profile";
 import {ProfileStatus} from "./ProfileStatus/ProfileStatus";
+import {ProfileStatusWithHooks} from "./ProfileStatus/ProfileStatusWithHooks";
 
 
 export function ProfileInfo(props: ProfilePropsType) {
@@ -20,7 +21,7 @@ export function ProfileInfo(props: ProfilePropsType) {
                     <p><b>Обо мне: </b>{profile.aboutMe ? profile.aboutMe : "Пытаюсь стать програмистом"}</p>
                     <p><b>Ищет работу: </b>{profile.lookingForAJob ? profile.lookingForAJobDescription : "Уже работаю:)"}</p>
                     <br/>
-                    <ProfileStatus status={status} updateStatus={updateStatus}/>
+                    <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
                 </div>
             </div>
     );
