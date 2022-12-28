@@ -6,13 +6,8 @@ type ProfileStatusType = {
     updateStatus: (status: string) => void
 }
 
-type LocalStateType = {
-    editMode: boolean
-    status: string
-}
 
 export const ProfileStatusWithHooks = (props: ProfileStatusType) => {
-    console.log(props.status)
     const [status, setStatus] = useState(props.status);
     const [editMode, setEditMode] = useState(false);
 
