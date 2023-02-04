@@ -26,3 +26,10 @@ export const getUserLoginId = createSelector(getUserLoginIdHelper, (id: number |
     return id;
 })
 
+const getCaptchaUrlHelper = (state: StateType): string | null => {
+    return state.auth.captchaUrl;
+}
+export const getCaptchaUrl = createSelector(getCaptchaUrlHelper, (captchaUrl: string | null): string | null => {
+    return captchaUrl;
+})
+

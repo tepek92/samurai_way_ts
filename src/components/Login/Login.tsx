@@ -1,85 +1,40 @@
 import React from 'react';
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import {setLoginMeThunkCreator} from "../../redux/authReducer";
-import {FormController} from "../common/FormController/FormController";
-import {required} from "../../utils/validators/validator";
 import {StateType} from "../../redux/store";
 import {Redirect} from "react-router-dom";
-import s from "../common/FormController/FormController.module.css"
-import {getIsAuth} from "../../selectors/authSelectors";
-
-type FormDataType = {
-    login: string
-    password: string
-    rememberMe: boolean
-}
+import {getCaptchaUrl, getIsAuth} from "../../selectors/authSelectors";
+import {FormDataType, LoginFormWithFom} from "./loginForm";
 
 type PropsType = {
-    setLogin: (email: string, password: string, rememberMe: boolean) => void
+  setLogin: (email: string, password: string, rememberMe: boolean, captcha: string | null) => void
 } & MSTPType;
 
-function Login(props: PropsType) {
-    const {setLogin, isAuth} = props;
+const Login = (props: PropsType) => {
+  const {setLogin, isAuth, captchaUrl} = props;
 
-    const onSubmit = (formData: FormDataType) => {
-        const {login, password, rememberMe} = formData;
-        setLogin(login, password, rememberMe);
-    }
+  const onSubmit = (formData: FormDataType) => {
+    const {login, password, rememberMe, captcha} = formData;
+    setLogin(login, password, rememberMe, captcha);
+  }
 
-    return (
-        isAuth
-            ? <Redirect to={'/profile'}/>
-            : <div>
-                LOGIN
-                <LoginFormWithFom onSubmit={onSubmit}/>
-            </div>
-    );
+  return (
+    isAuth
+      ? <Redirect to={'/profile'}/>
+      : <div>
+        LOGIN
+        <LoginFormWithFom onSubmit={onSubmit} captchaUrl={captchaUrl}/>
+      </div>
+  );
 }
-
-// =====================
-function LoginForm(props: InjectedFormProps<FormDataType>) {
-    const {handleSubmit, error} = props;
-    return (
-        <form onSubmit={handleSubmit}>
-            <Field
-                name="login"
-                placeholder="login"
-                component={FormController}
-                Element="input"
-                validate={[required]}
-            />
-            <br/>
-            <Field
-                name="password"
-                type="password"
-                placeholder="password"
-                component={FormController}
-                Element="input"
-                validate={[required]}
-            />
-            <br/>
-            <Field
-                name="rememberMe"
-                type="checkbox"
-                component="input"/>
-            <br/>
-            <button>login</button>
-            {error && <div className={s.allError}>{error}</div>}
-        </form>
-    );
-}
-
-const LoginFormWithFom = reduxForm<FormDataType>({
-    form: 'login'
-})(LoginForm);
-
 
 type MSTPType = {
-    isAuth: boolean
+  isAuth: boolean
+  captchaUrl: null | string
 }
 const mapStateToProps = (state: StateType): MSTPType => ({
-    isAuth: getIsAuth(state)
+  isAuth: getIsAuth(state),
+  captchaUrl: getCaptchaUrl(state)
 });
 
 export const LoginContainer = connect(mapStateToProps, {setLogin: setLoginMeThunkCreator})(Login);

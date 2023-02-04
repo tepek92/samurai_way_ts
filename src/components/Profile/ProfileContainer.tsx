@@ -12,6 +12,7 @@ import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
 import {getProfile, getStatus} from "../../selectors/profileSelectors";
 import {getUserLoginId} from "../../selectors/authSelectors";
+import {withRedirect} from "../../hok/withRedirect";
 
 
 type PathParamsType = {
@@ -79,7 +80,7 @@ const mapStateToProps = (state: StateType): MapStateType => {
 export const ProfileContainer = compose<ComponentType>
 (
   withRouter,
-  // withRedirect,
+  withRedirect,
   connect(mapStateToProps, {
     getProfiler: getProfileThunkCreator,
     getStatus: getUserStatusThunkCreator,

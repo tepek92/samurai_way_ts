@@ -12,7 +12,7 @@ export const ProfileInfo = (props: ProfilePropsType) => {
 
   const onChangeFileHandler = (e: ChangeEvent<HTMLInputElement>) => {
     console.log('file = ', e.target.files)
-    if(e.target.files) {
+    if(e.target.files?.length) {
       updatePhoto(e.target.files[0])
     }
   }

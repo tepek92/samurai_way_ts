@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ComponentType} from "react";
 import {connect} from "react-redux";
 import {Users} from "./Users";
 import {StateType} from "../../redux/store";
@@ -15,6 +15,8 @@ import {
     getTotalUsersCount,
     getUsers
 } from "../../selectors/usersSelectors";
+import {compose} from "redux";
+import {withRedirect} from "../../hok/withRedirect";
 
 
 type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType;
@@ -90,8 +92,11 @@ const mapStateToProps = (state: StateType): MapStateToPropsType => ({
     isFollowing: getIsFollowing(state)
 });
 
-export const UsersContainer = connect(mapStateToProps, {
-    changeCurrenPage: changeCurrentPageAC,
-    getUsers: getUsersThunkCreator,
-    subscribeToggle: subscribeToggleThunkCreator
-})(UsersContainerAPI);
+export const UsersContainer = compose<ComponentType> (
+  withRedirect,
+  connect(mapStateToProps, {
+      changeCurrenPage: changeCurrentPageAC,
+      getUsers: getUsersThunkCreator,
+      subscribeToggle: subscribeToggleThunkCreator
+  })
+)(UsersContainerAPI)
