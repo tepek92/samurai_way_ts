@@ -4,10 +4,10 @@
     /*font-family: 'Nunito', sans-serif;*/
     font-family: 'Titillium Web', sans-serif;
     max-width: 1200px;
-    display: grid;
-    grid-template-areas: "header header" "nav content";
-    grid-template-rows: 100px 1fr;
-    grid-template-columns: 2fr 10fr;
+    /*display: grid;*/
+    /*grid-template-areas: "header header" "nav content";*/
+    /*grid-template-rows: 100px 1fr;*/
+    /*grid-template-columns: 2fr 10fr;*/
     margin: 10px auto;
 }
 

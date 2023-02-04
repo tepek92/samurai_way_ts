@@ -1,9 +1,9 @@
 import React from 'react';
-import {Header} from "./Header";
 import {connect} from "react-redux";
 import {deleteLoginMeThunkCreator, getAuthMeThunkCreator} from "../../redux/authReducer";
 import {StateType} from "../../redux/store";
 import {getIsAuth, getLogin} from "../../selectors/authSelectors";
+import {Header} from "./Header";
 
 export type HeaderPropsType = MapState & MapDispatch;
 

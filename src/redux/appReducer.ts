@@ -25,6 +25,10 @@ export const initializedSuccessAC = () => ({type: "INITIALIZED-SUCCESS"} as cons
 
 export const initializedAppSuccessTC = (): ThunkType =>
   async (dispatch: DispatchType) => {
-    await dispatch(getAuthMeThunkCreator());
-    dispatch(initializedSuccessAC());
+    try {
+      await dispatch(getAuthMeThunkCreator());
+      dispatch(initializedSuccessAC());
+    } catch (error) {
+      // доавить обработку ошибок
+    }
   }

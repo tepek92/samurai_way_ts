@@ -54,37 +54,49 @@ export const getCaptchaUrlAC = (captchaUrl: string) => ({
 } as const);
 
 export const getAuthMeThunkCreator = () => async (dispatch: Dispatch) => {
-  const data = await authAPI.getAuthMe()
-  if (data.resultCode === 0) {
-    const {id, email, login} = data.data
-    dispatch(setAuthUserAC(id, email, login));
+  try {
+    const data = await authAPI.getAuthMe()
+    if (data.resultCode === 0) {
+      const {id, email, login} = data.data
+      dispatch(setAuthUserAC(id, email, login));
+    }
+  } catch (error) {
+    // доавить обработку ошибок
   }
 }
 
 export const setLoginMeThunkCreator = (email: string, password: string, rememberMe: boolean, captcha: string | null): ThunkType =>
   async (dispatch: Dispatch) => {
-    const data = await authAPI.setLoginMe(email, password, rememberMe, captcha)
-    if (data.resultCode === 0) {
-      const data = await authAPI.getAuthMe()
+    try {
+      const data = await authAPI.setLoginMe(email, password, rememberMe, captcha)
       if (data.resultCode === 0) {
-        const {id, email, login} = data.data
-        dispatch(setAuthUserAC(id, email, login))
-        dispatch(getCaptchaUrlAC(data.url))
+        const data = await authAPI.getAuthMe()
+        if (data.resultCode === 0) {
+          const {id, email, login} = data.data
+          dispatch(setAuthUserAC(id, email, login))
+          dispatch(getCaptchaUrlAC(data.url))
+        }
+      } else {
+        if (data.resultCode === 10) {
+          const data = await securityAPI.getCaptchaUrl()
+          dispatch(getCaptchaUrlAC(data.url))
+        }
+        const message = data.messages[0].length > 0 ? data.messages[0] : 'Some error'
+        dispatch(stopSubmit("login", {_error: message}))
       }
-    } else {
-      if(data.resultCode === 10) {
-        const data = await securityAPI.getCaptchaUrl()
-        dispatch(getCaptchaUrlAC(data.url))
-      }
-      const message = data.messages[0].length > 0 ? data.messages[0] : 'Some error'
-      dispatch(stopSubmit("login", {_error: message}))
+    } catch (error) {
+      // доавить обработку ошибок
     }
   }
 
 export const deleteLoginMeThunkCreator = (): ThunkType =>
   async (dispatch: Dispatch) => {
-    const data = await authAPI.deleteLoginMe()
-    if (data.resultCode === 0) {
-      dispatch(deleteAuthUserAC())
+    try {
+      const data = await authAPI.deleteLoginMe()
+      if (data.resultCode === 0) {
+        dispatch(deleteAuthUserAC())
+      }
+    } catch (error) {
+      // доавить обработку ошибок
     }
   }

@@ -87,29 +87,45 @@ export const addPostTC = (postText: string): ThunkType =>
 
 export const getProfileThunkCreator = (userId: string): ThunkType =>
   async (dispatch: Dispatch) => {
-    const data = await profileAPI.getProfile(userId)
-    dispatch(setUserProfileAC(data));
+    try {
+      const data = await profileAPI.getProfile(userId)
+      dispatch(setUserProfileAC(data));
+    } catch (error) {
+      // доавить обработку ошибок
+    }
   }
 
 export const getUserStatusThunkCreator = (userId: string): ThunkType =>
   async (dispatch: Dispatch) => {
-    const data = await profileAPI.getUserStatus(userId)
-    dispatch(setUserStatusAC(data));
+    try {
+      const data = await profileAPI.getUserStatus(userId)
+      dispatch(setUserStatusAC(data));
+    } catch (error) {
+      // доавить обработку ошибок
+    }
   }
 
 export const updateUserStatusThunkCreator = (status: string): ThunkType =>
   async (dispatch: Dispatch) => {
-    const data = await profileAPI.updateUserStatus(status)
-    if (data.resultCode === 0) {
-      dispatch(setUserStatusAC(status));
+    try {
+      const data = await profileAPI.updateUserStatus(status)
+      if (data.resultCode === 0) {
+        dispatch(setUserStatusAC(status));
+      }
+    } catch (error) {
+      // доавить обработку ошибок
     }
   }
 
 export const updateUserPhotoThunkCreator = (photo: File): ThunkType =>
   async (dispatch: Dispatch) => {
-    const data = await profileAPI.updateUserPhoto(photo)
-    if (data.resultCode === 0) {
-      console.log('then: ', data)
-      dispatch(setUserPhotoAC(data.data.photos));
+    try {
+      const data = await profileAPI.updateUserPhoto(photo)
+      if (data.resultCode === 0) {
+        console.log('then: ', data)
+        dispatch(setUserPhotoAC(data.data.photos));
+      }
+    } catch (error) {
+      // доавить обработку ошибок
     }
   }

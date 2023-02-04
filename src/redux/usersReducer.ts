@@ -75,27 +75,40 @@ export const toggleIsFollowingAC = (userId: number, isFollowing: boolean) => ({
 export const getUsersThunkCreator = (page: number, pageSize: number): ThunkType =>
   async (dispatch: Dispatch) => {
     dispatch(toggleIsFetchingAC(true));
-    const data = await usersAPI.getUsers(page, pageSize)
-    dispatch(setUsersAC(data.items));
-    dispatch(setTotalUsersCountAC(data.totalCount));
-    dispatch(toggleIsFetchingAC(false));
+    try {
+      const data = await usersAPI.getUsers(page, pageSize)
+      dispatch(setUsersAC(data.items));
+      dispatch(setTotalUsersCountAC(data.totalCount));
+      dispatch(toggleIsFetchingAC(false));
+    } catch (error) {
+      // доавить обработку ошибок
+      dispatch(toggleIsFetchingAC(false));
+    }
+
   }
 
 export const subscribeToggleThunkCreator = (userId: number): ThunkType =>
   async (dispatch: Dispatch) => {
     dispatch(toggleIsFollowingAC(userId, true));
-    const data = await followAPI.getFollow(userId)
-    if (data) {
-      const data = await followAPI.deleteFollow(userId)
-      if (data.resultCode === 0) {
-        dispatch(toggleSubscribeAC(userId));
+
+    try {
+      const data = await followAPI.getFollow(userId)
+      if (data) {
+        const data = await followAPI.deleteFollow(userId)
+        if (data.resultCode === 0) {
+          dispatch(toggleSubscribeAC(userId));
+        }
+        dispatch(toggleIsFollowingAC(userId, false));
+      } else {
+        const data = await followAPI.postFollow(userId)
+        if (data.resultCode === 0) {
+          dispatch(toggleSubscribeAC(userId));
+        }
+        dispatch(toggleIsFollowingAC(userId, false));
       }
-      dispatch(toggleIsFollowingAC(userId, false));
-    } else {
-      const data = await followAPI.postFollow(userId)
-      if (data.resultCode === 0) {
-        dispatch(toggleSubscribeAC(userId));
-      }
-      dispatch(toggleIsFollowingAC(userId, false));
+    } catch (error) {
+      // доавить обработку ошибок
+      dispatch(toggleIsFetchingAC(false));
     }
+
   }
