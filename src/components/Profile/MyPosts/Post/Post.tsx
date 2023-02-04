@@ -10,12 +10,12 @@ type PostPropsType = {
     profile: UserProfileType
 }
 
-export function Post(props: PostPropsType) {
+export const Post = (props: PostPropsType) => {
     const {text, like, profile} = props;
     return (
         <div className={style.my_post}>
             <img className={style.avatar}
-                 src={profile.photos ? profile.photos.small : avatar} alt={''}/>
+                 src={profile.photos?.small ? profile.photos.small : avatar} alt={''}/>
             <span>
                 {text}
                 <div className={style.like}>{like}<button>like</button></div>

@@ -8,6 +8,7 @@ import {ThunkType} from "./store";
 export type ProfileActionsType =
     ReturnType<typeof addPostAC> |
     ReturnType<typeof setUserProfileAC> |
+    ReturnType<typeof setUserPhotoAC> |
     ReturnType<typeof setUserStatusAC>;
 
 
@@ -63,6 +64,10 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
         case "SET-STATUS-PROFILE": {
             return {...state, status: action.status};
         }
+        case "SET-PHOTO-PROFILE": {
+            console.log('action.photo: ', action.photo)
+            return {...state, profile: {...state.profile, photos: action.photo}};
+        }
         default:
             return state;
     }
@@ -71,6 +76,7 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
 export const addPostAC = (postText: string) => ({type: "ADD-POST", postText} as const);
 export const setUserProfileAC = (profile: UserProfileType) => ({type: "SET-USER-PROFILE", profile} as const);
 export const setUserStatusAC = (status: string) => ({type: "SET-STATUS-PROFILE", status} as const);
+export const setUserPhotoAC = (photo: PhotosUserType) => ({type: "SET-PHOTO-PROFILE", photo} as const);
 
 export const addPostTC = (postText: string): ThunkType => {
     return (dispatch: Dispatch) => {
@@ -106,5 +112,18 @@ export const updateUserStatusThunkCreator = (status: string): ThunkType => {
                     dispatch(setUserStatusAC(status));
                 }
             });
+    }
+}
+
+export const updateUserPhotoThunkCreator = (photo: File): ThunkType => {
+    console.log('updateUserPhotoThunkCreator: ', photo)
+    return (dispatch: Dispatch) => {
+        profileAPI.updateUserPhoto(photo)
+          .then(data => {
+              if(data.resultCode === 0) {
+                  console.log('then: ', data)
+                  dispatch(setUserPhotoAC(data.data.photos));
+              }
+          });
     }
 }

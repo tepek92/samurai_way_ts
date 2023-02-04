@@ -33,7 +33,7 @@ type FormDataPostType = {
   postTex: string
 }
 
-function MyPostsForm(props: InjectedFormProps<FormDataPostType>) {
+const MyPostsForm = (props: InjectedFormProps<FormDataPostType>) => {
   const {handleSubmit} = props;
   return (
     <form onSubmit={handleSubmit}>
