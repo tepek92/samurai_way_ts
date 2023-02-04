@@ -31,8 +31,6 @@ class ProfileContainerAPI extends React.Component<ProfileContainerType> {
         if(userId === null) {
             this.props.history.push('/login');
         } else {
-            console.log(userId)
-
             this.props.getProfiler(userId+'');
             this.props.getStatus(userId+'');
         }
