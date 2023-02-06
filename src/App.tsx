@@ -9,6 +9,9 @@ import {connect} from "react-redux";
 import {initializedAppSuccessTC} from "./redux/appReducer";
 import {compose} from "redux";
 import {Preloader} from "./components/common/Preloader/Preloader";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Unstable_Grid2";
+import Container from '@mui/material/Container';
 
 const DialogsContainer = lazy(() =>
   import('./components/Dialogs/DialogsContainer')
@@ -32,21 +35,26 @@ class App extends Component<AppPropsType> {
     }
     return (
       <BrowserRouter>
-        <div className="app-wrapper">
-          <HeaderContainer/>
-          <div className={"app-wrapper-content"}>
-            <Suspense fallback={<Preloader/>}>
-              <Switch>
-                <Route exact path="/" render={() => <Redirect to='/profile'/>}/>
-                <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
-                <Route path="/dialogs" render={() => <DialogsContainer/>}/>
-                <Route path="/users" render={() => <UsersContainer/>}/>
-                <Route path="/login" render={() => <LoginContainer/>}/>
-                <Route path="*" render={() => <div>404 PAGE NOT FOUND</div>}/>
-              </Switch>
-            </Suspense>
-          </div>
-        </div>
+          <Box sx={{flexGrow: 1}}>
+            <Grid container spacing={2}>
+              <Grid xs={12}>
+                <HeaderContainer/>
+              </Grid>
+              <Grid xs={12}>
+
+                <Suspense fallback={<Preloader/>}>
+                  <Switch>
+                    <Route exact path="/" render={() => <Redirect to='/profile'/>}/>
+                    <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
+                    <Route path="/dialogs" render={() => <DialogsContainer/>}/>
+                    <Route path="/users" render={() => <UsersContainer/>}/>
+                    <Route path="/login" render={() => <LoginContainer/>}/>
+                    <Route path="*" render={() => <div>404 PAGE NOT FOUND</div>}/>
+                  </Switch>
+                </Suspense>
+              </Grid>
+            </Grid>
+          </Box>
       </BrowserRouter>
     );
   }

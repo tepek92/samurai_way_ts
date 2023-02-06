@@ -1,6 +1,7 @@
 import {createSelector} from "reselect";
 import {StateType} from "../redux/store";
 import {PostType, UserProfileType} from "../redux/profileReducer";
+import {PhotosUserType} from "../redux/usersReducer";
 
 const getProfileHelper = (state: StateType): UserProfileType => {
     return state.profilePage.profile;
@@ -25,4 +26,5 @@ const getPostsHelper = (state: StateType): PostType[] => {
 export const getPosts = createSelector(getPostsHelper, (posts: PostType[]): PostType[] => {
     return posts;
 })
+
 

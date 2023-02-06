@@ -1,0 +1,43 @@
+.item {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Roboto", sans-serif;
+}
+
+
+.itemName {
+    display: flex;
+    align-items: center;
+}
+
+.linkName {
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+.link {
+    font-size: 16px;
+    color: #6c757d;
+}
+
+.link a{
+    color: #6c757d;
+    text-decoration: none;
+}
+.link a:hover{
+    color: #000;
+}
+
+.twitter svg{
+    color: #17a2b8;
+}
+
+.instagram svg{
+    color: #dc3545;
+}
+
+.facebook svg{
+    color: #007bff;
+}

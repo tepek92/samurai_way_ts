@@ -1,5 +1,5 @@
-import React, {FC, useState} from 'react';
-import {NavLink, useHistory} from "react-router-dom";
+import React, {FC} from 'react';
+import {NavLink} from "react-router-dom";
 import {HeaderPropsType} from "./HeaderContainer";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -8,10 +8,17 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
-import style from './Navbar.module.css';
+import style from './Header.module.css';
+import avatar from "../../img/samurai2.png";
+import Chip from '@mui/material/Chip';
 
 
-export const Header: FC<HeaderPropsType> = ({login, isAuth, deleteLogin}) => {
+export const Header: FC<HeaderPropsType> = ({
+                                              login,
+                                              isAuth,
+                                              deleteLogin,
+                                              profile,
+}) => {
   const logoutHandler = () => {
     deleteLogin();
   }
@@ -26,11 +33,17 @@ export const Header: FC<HeaderPropsType> = ({login, isAuth, deleteLogin}) => {
           </nav>
           {isAuth &&
               <Box sx={{marginLeft: 'auto'}}>
-                  <Tooltip title={login}>
-                      <IconButton sx={{p: 0}}>
-                          <Avatar alt="Remy Sharp" src="https://www.picng.com/upload/aikido/png_aikido_55913.png"/>
-                      </IconButton>
-                  </Tooltip>
+                  {/*<Tooltip title={login}>*/}
+                  {/*    <IconButton sx={{mr: 1}}>*/}
+                  {/*        <Avatar alt="Remy Sharp" src={profile.photos?.large ? profile.photos.large : avatar}/>*/}
+                  {/*    </IconButton>*/}
+                  {/*</Tooltip>*/}
+
+                  <Chip
+                      avatar={<Avatar alt="avatar" src={profile.photos?.large ? profile.photos.large : avatar}/>}
+                      label={profile.fullName}
+                      variant="outlined"
+                  />
                   <Button
                       color="inherit"
                       onClick={logoutHandler}

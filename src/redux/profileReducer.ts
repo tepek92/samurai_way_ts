@@ -48,7 +48,7 @@ const initialState = {
     {id: v1(), text: "Hello!", like: 1},
   ] as PostType[],
   profile: {} as UserProfileType,
-  status: "" as string
+  status: "" as string,
 };
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionsType): ProfilePageType => {
@@ -65,7 +65,6 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
       return {...state, status: action.status};
     }
     case "SET-PHOTO-PROFILE": {
-      console.log('action.photo: ', action.photo)
       return {...state, profile: {...state.profile, photos: action.photo}};
     }
     default:

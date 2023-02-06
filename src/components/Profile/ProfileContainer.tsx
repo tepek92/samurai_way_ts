@@ -6,13 +6,15 @@ import {
   updateUserStatusThunkCreator,
   UserProfileType
 } from "../../redux/profileReducer";
-import {Profile} from "./Profile";
 import {StateType} from "../../redux/store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
 import {getProfile, getStatus} from "../../selectors/profileSelectors";
 import {getUserLoginId} from "../../selectors/authSelectors";
 import {withRedirect} from "../../hok/withRedirect";
+import {Profile} from "./Profile";
+import {subscribeToggleThunkCreator} from "../../redux/usersReducer";
+import {getIsFollowing} from "../../selectors/usersSelectors";
 
 
 type PathParamsType = {
@@ -21,8 +23,11 @@ type PathParamsType = {
 export type ProfileContainerType = MapStateType & MapDispatchType & RouteComponentProps<PathParamsType>;
 
 class ProfileContainerAPI extends React.Component<ProfileContainerType> {
+  userId = this.props.match.params.userId
+    ? this.props.match.params.userId
+    : this.props.userLoginId
 
-  refreshProfilePage() {
+  refreshProfilePage = () => {
     const userId =
       this.props.match.params.userId
         ? this.props.match.params.userId
@@ -33,6 +38,8 @@ class ProfileContainerAPI extends React.Component<ProfileContainerType> {
       this.props.getProfiler(userId + '');
       this.props.getStatus(userId + '');
     }
+
+    this.userId = userId
   }
 
   componentDidMount() {
@@ -45,12 +52,14 @@ class ProfileContainerAPI extends React.Component<ProfileContainerType> {
     }
   }
 
+
   render() {
     return <Profile
       profile={this.props.profile}
       status={this.props.status}
       updateStatus={this.props.updateStatus}
       updatePhoto={this.props.updatePhoto}
+      isMe={this.props.userLoginId === this.userId}
     />
   }
 }
@@ -59,7 +68,6 @@ export type MapStateType = {
   profile: UserProfileType
   status: string
   userLoginId: number | null
-
 }
 
 export type MapDispatchType = {
@@ -73,7 +81,7 @@ const mapStateToProps = (state: StateType): MapStateType => {
   return {
     profile: getProfile(state),
     status: getStatus(state),
-    userLoginId: getUserLoginId(state)
+    userLoginId: getUserLoginId(state),
   }
 };
 

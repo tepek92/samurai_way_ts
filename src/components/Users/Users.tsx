@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 import s from "./Users.module.css"
 import avatar from "../../img/samurai2.png"
 import {UserType} from "../../redux/usersReducer";
@@ -18,7 +18,7 @@ type UsersPropsType = {
 }
 
 
-export function Users(props: UsersPropsType) {
+export const Users: FC<UsersPropsType> = (props) => {
     const {
         users,
         pageSize,
