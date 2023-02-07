@@ -35,26 +35,27 @@ class App extends Component<AppPropsType> {
     }
     return (
       <BrowserRouter>
-          <Box sx={{flexGrow: 1}}>
-            <Grid container spacing={2}>
-              <Grid xs={12}>
-                <HeaderContainer/>
-              </Grid>
-              <Grid xs={12}>
+        <Box sx={{flexGrow: 1, background: '#f9f9f9', height: '100vh'}}>
+          <HeaderContainer/>
+          <Grid container spacing={2}>
+            {/*<Grid xs={12}>*/}
+            {/*  <HeaderContainer/>*/}
+            {/*</Grid>*/}
+            <Grid xs={12}>
 
-                <Suspense fallback={<Preloader/>}>
-                  <Switch>
-                    <Route exact path="/" render={() => <Redirect to='/profile'/>}/>
-                    <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
-                    <Route path="/dialogs" render={() => <DialogsContainer/>}/>
-                    <Route path="/users" render={() => <UsersContainer/>}/>
-                    <Route path="/login" render={() => <LoginContainer/>}/>
-                    <Route path="*" render={() => <div>404 PAGE NOT FOUND</div>}/>
-                  </Switch>
-                </Suspense>
-              </Grid>
+              <Suspense fallback={<Preloader/>}>
+                <Switch>
+                  <Route exact path="/" render={() => <Redirect to='/profile'/>}/>
+                  <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
+                  <Route path="/dialogs" render={() => <DialogsContainer/>}/>
+                  <Route path="/users" render={() => <UsersContainer/>}/>
+                  <Route path="/login" render={() => <LoginContainer/>}/>
+                  <Route path="*" render={() => <div>404 PAGE NOT FOUND</div>}/>
+                </Switch>
+              </Suspense>
             </Grid>
-          </Box>
+          </Grid>
+        </Box>
       </BrowserRouter>
     );
   }

@@ -3,13 +3,14 @@ import TextField from "@mui/material/TextField";
 import {FormControllerType} from "../../../../common/FormControllerMUI/FormControllerMUI";
 
 export const CustomInput = (props: FormControllerType) => {
+  const { placeholder } = props
   const {
     input: { value, onChange }
   } = props
 
   return (
     <TextField
-      placeholder='Enter you post'
+      placeholder={placeholder}
       size='small'
       multiline
       value={value}

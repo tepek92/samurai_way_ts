@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import {FromDataProfileType, ProfileEdit} from "./ProfileEdit/ProfileEdit";
 import {UpdateUserType} from "../../../redux/profileReducer";
 
+
 export const ProfileBlock: FC<ProfilePropsType> =
   ({
      profile,

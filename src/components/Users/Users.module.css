@@ -9,7 +9,6 @@
 }
 
 .user {
-    /*margin-bottom: 10px;*/
     width: 400px;
     min-height: 100px;
     display: flex;
@@ -73,7 +72,7 @@
 
 .pagination {
     display: inline-block;
-    margin-bottom: 30px;
+    margin: 30px 0;
 }
 
 .pagination span {
@@ -81,7 +80,6 @@
     color: black;
     float: left;
     padding: 4px 10px;
-    /*padding: 6px 14px;*/
     text-decoration: none;
     margin: 0 5px;
 }

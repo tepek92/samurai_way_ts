@@ -7,11 +7,13 @@
     /*grid-template-rows: 100px 1fr;*/
     /*grid-template-columns: 2fr 10fr;*/
     margin: 10px auto;
+    background-color: #fdbf7f;
+
 }
 
 .app-wrapper-content {
     /*padding: 20px;*/
     /*grid-area: content;*/
-    /*background-color: #ece8e4;*/
+    /*background-color: #fdbf7f;*/
 }
 

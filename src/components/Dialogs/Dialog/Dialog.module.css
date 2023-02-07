@@ -1,12 +1,14 @@
 .body {
-    margin-left: 10px;
-    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .link {
+    width: 150px;
     color: black;
     text-decoration: none;
-    display: flex;
 }
 
 .active {
@@ -16,8 +18,4 @@
 .body img {
     width: 50px;
     border-radius: 50%;
-}
-
-.name {
-    margin-left: 15px;
 }

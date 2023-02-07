@@ -32,7 +32,11 @@ const MyPostsForm: FC<InjectedFormProps<FormDataPostType, PostFormPropsType> & P
                   alt="avatar"
                   className={style.avatar}
                 />
-                <Field component={CustomInput} name="postTex"></Field>
+                <Field
+                  component={CustomInput}
+                  name="postTex"
+                  placeholder='Enter you post'
+                ></Field>
               </div>
 
               <div className={style.btn}>

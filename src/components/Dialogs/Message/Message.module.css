@@ -1,6 +1,6 @@
 :root {
     --main-background-color: #fff;
-    --message-background-color: #4db393;
+    --message-background-color: #e6f3fc;
 }
 
 .column_block {
@@ -82,9 +82,9 @@
 }
 
 .name {
-    font-weight: bold;
+    font-weight: 600;
     margin-bottom: 10px;
-    color: #7631b7;
+    color: #000;
 }
 
 .text {

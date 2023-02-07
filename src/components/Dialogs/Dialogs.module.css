@@ -1,21 +1,18 @@
 .content {
-    display: grid;
-    grid-template-columns: 5fr 10fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Roboto", sans-serif;
 }
 
 .dialogs {
-
-}
-
-.dialog {
-
+    width: 600px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
 }
 
 .messages {
-    border-left: 1px solid #474240 ;
-    min-height: 600px;
-}
-
-.message {
-
+    width: 600px;
+    padding: 20px;
 }

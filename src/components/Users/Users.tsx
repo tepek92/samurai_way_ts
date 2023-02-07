@@ -36,7 +36,6 @@ export const Users: FC<UsersPropsType> = (props) => {
 
   const userElements = users.map(u => {
     const subscribe = u.followed ? "UNFOLLOW" : "FOLLOW";
-    // const styleBtn = u.followed ? s.btn + ' ' + s.unfollow : s.btn;
     const styleBtn = u.followed ? "contained" : "outlined"
     const onClickHandler = () => onToggleSubscribe(u.id);
     return (
@@ -58,11 +57,6 @@ export const Users: FC<UsersPropsType> = (props) => {
               >
                 {subscribe}
               </Button>
-              {/*<button*/}
-              {/*  disabled={isFollowing.some(f => f === u.id)}*/}
-              {/*  className={styleBtn}*/}
-              {/*  onClick={onClickHandler}>{subscribe}*/}
-              {/*</button>*/}
             </div>
           </div>
 
