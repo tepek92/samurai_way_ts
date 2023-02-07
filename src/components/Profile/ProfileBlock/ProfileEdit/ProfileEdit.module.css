@@ -1,0 +1,14 @@
+.editBody {
+    padding: 30px;
+    font-family: "Roboto", sans-serif;
+}
+
+.field {
+    margin-top: 10px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}

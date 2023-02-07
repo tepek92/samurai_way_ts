@@ -1,14 +1,14 @@
 import React from 'react';
 import TextField from "@mui/material/TextField";
+import {FormControllerType} from "../../../../common/FormControllerMUI/FormControllerMUI";
 
-export const CustomInput = (props: any) => {
+export const CustomInput = (props: FormControllerType) => {
   const {
     input: { value, onChange }
   } = props
 
   return (
     <TextField
-      id="postTex"
       placeholder='Enter you post'
       size='small'
       multiline

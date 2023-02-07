@@ -3,7 +3,7 @@ import {PhotosUserType} from "./usersReducer";
 import {Dispatch} from "redux";
 import {profileAPI} from "../api/api";
 import {reset} from "redux-form";
-import {ThunkType} from "./store";
+import {DispatchType, ThunkType} from "./store";
 
 export type ProfileActionsType =
   ReturnType<typeof addPostAC> |
@@ -19,6 +19,7 @@ export type PostType = {
   likes: number
   views: number
 }
+
 type ContactsType = {
   facebook: string
   website: string
@@ -36,8 +37,23 @@ export type UserProfileType = {
   lookingForAJob: boolean
   lookingForAJobDescription: string
   fullName: string
-  userId: number
+  userId: string
   photos: PhotosUserType
+}
+
+export type UpdateUserType = {
+  userId: string
+  fullName: string
+  aboutMe: string
+  lookingForAJob: boolean
+  lookingForAJobDescription: string
+  contacts: {
+    website: string | null
+    github: string | null
+    twitter: string | null
+    instagram: string | null
+    facebook: string | null
+  }
 }
 
 export type ProfilePageType = typeof initialState;
@@ -90,8 +106,10 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
       return {...state, profile: {...state.profile, photos: action.photo}};
     }
     case "SET-LIKES-POST": {
-      return {...state,
-      posts: state.posts.map(p => p.id === action.id ? {...p, likes: action.likes}: p)}
+      return {
+        ...state,
+        posts: state.posts.map(p => p.id === action.id ? {...p, likes: action.likes} : p)
+      }
     }
     default:
       return state;
@@ -158,4 +176,16 @@ export const updateUserPhotoThunkCreator = (photo: File): ThunkType =>
 export const updateLikesPostThunkCreator = (id: string, likes: number): ThunkType =>
   async (dispatch: Dispatch) => {
     dispatch(setPostLikesAC(id, likes));
+  }
+
+export const updateUserProfileThunkCreator = (dataUser: UpdateUserType): ThunkType =>
+  async (dispatch: DispatchType) => {
+    try {
+      const data = await profileAPI.updateUserProfile(dataUser)
+      if (data.resultCode === 0) {
+        dispatch(getProfileThunkCreator(dataUser.userId));
+      }
+    } catch (error) {
+      // доавить обработку ошибок
+    }
   }

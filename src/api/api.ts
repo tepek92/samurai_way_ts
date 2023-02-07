@@ -1,4 +1,5 @@
 import axios from "axios";
+import {UpdateUserType} from "../redux/profileReducer";
 
 
 const instance = axios.create({
@@ -66,11 +67,15 @@ export const profileAPI = {
     let formData = new FormData();
     formData.append("image", photo);
 
-    return instance.put(`/profile/photo`, formData, {
+    return instance.put(`profile/photo`, formData, {
       headers: {
         "Content-type": "multipart/form-data",
       }
     }).then(response => response.data)
+  },
+  updateUserProfile(data: UpdateUserType) {
+    return instance.put(`profile`, data)
+      .then(response => response.data)
   }
 }
 

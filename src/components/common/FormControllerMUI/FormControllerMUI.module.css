@@ -1,0 +1,19 @@
+.error input{
+    border: 2px red solid;
+}
+
+.error span{
+    color: red;
+}
+
+.inputError {
+    border: 2px red solid;
+}
+
+.spanError {
+    color: red;
+}
+
+.allError {
+    color: red;
+}

@@ -3,8 +3,8 @@ import {connect} from "react-redux";
 import {
   getProfileThunkCreator,
   getUserStatusThunkCreator,
-  updateUserPhotoThunkCreator,
-  updateUserStatusThunkCreator,
+  updateUserPhotoThunkCreator, updateUserProfileThunkCreator,
+  updateUserStatusThunkCreator, UpdateUserType,
   UserProfileType
 } from "../../redux/profileReducer";
 import {StateType} from "../../redux/store";
@@ -58,6 +58,7 @@ class ProfileContainerAPI extends React.Component<ProfileContainerType> {
       status={this.props.status}
       updateStatus={this.props.updateStatus}
       updatePhoto={this.props.updatePhoto}
+      updateProfile={this.props.updateProfile}
       isMe={this.props.userLoginId === this.userId}
     />
   }
@@ -74,6 +75,7 @@ export type MapDispatchType = {
   getStatus: (userId: string) => void
   updateStatus: (status: string) => void
   updatePhoto: (photo: File) => void
+  updateProfile: (dataUser: UpdateUserType) => void
 }
 
 const mapStateToProps = (state: StateType): MapStateType => {
@@ -93,5 +95,6 @@ export const ProfileContainer = compose<ComponentType>
     getStatus: getUserStatusThunkCreator,
     updateStatus: updateUserStatusThunkCreator,
     updatePhoto: updateUserPhotoThunkCreator,
+    updateProfile: updateUserProfileThunkCreator,
   })
 )(ProfileContainerAPI)

@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 import {ProfilePostsContainer} from "./ProfilePosts/ProfilePostsContainer";
-import {UserProfileType} from "../../redux/profileReducer";
+import {UpdateUserType, UserProfileType} from "../../redux/profileReducer";
 import {ProfileBlock} from "./ProfileBlock/ProfileBlock";
 import {ProfileContacts} from "./ProfileContacts/ProfileContacts";
 
@@ -12,6 +12,7 @@ export type ProfilePropsType = {
   isMe: boolean
   updateStatus: (status: string) => void
   updatePhoto: (photo: File) => void
+  updateProfile: (dataUser: UpdateUserType) => void
 }
 
 export const Profile: FC<ProfilePropsType> = (props) => {
