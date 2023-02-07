@@ -2,7 +2,8 @@ import React, {ComponentType} from 'react';
 import {connect} from "react-redux";
 import {
   getProfileThunkCreator,
-  getUserStatusThunkCreator, updateUserPhotoThunkCreator,
+  getUserStatusThunkCreator,
+  updateUserPhotoThunkCreator,
   updateUserStatusThunkCreator,
   UserProfileType
 } from "../../redux/profileReducer";
@@ -13,8 +14,6 @@ import {getProfile, getStatus} from "../../selectors/profileSelectors";
 import {getUserLoginId} from "../../selectors/authSelectors";
 import {withRedirect} from "../../hok/withRedirect";
 import {Profile} from "./Profile";
-import {subscribeToggleThunkCreator} from "../../redux/usersReducer";
-import {getIsFollowing} from "../../selectors/usersSelectors";
 
 
 type PathParamsType = {

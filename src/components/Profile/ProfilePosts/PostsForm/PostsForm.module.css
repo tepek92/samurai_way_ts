@@ -1,0 +1,28 @@
+.newPots {
+    font-family: "Roboto", sans-serif;
+    padding: 20px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.inputBlock {
+    display: flex;
+    flex-direction: column;
+}
+
+.field {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    margin-right: 10px;
+}
+
+.btn {
+    align-self: flex-end;
+}

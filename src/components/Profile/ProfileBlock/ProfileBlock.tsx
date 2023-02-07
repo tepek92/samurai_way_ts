@@ -18,7 +18,7 @@ export const ProfileBlock: FC<ProfilePropsType> =
     return (
       !profile.userId
         ? <Preloader/>
-        : <Paper sx={{height: '100%'}}>
+        : <Paper>
           <div className={style.contentBox}>
             <ProfileAvatar profile={profile} isMe={isMe} updatePhoto={updatePhoto} />
 

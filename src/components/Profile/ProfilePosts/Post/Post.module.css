@@ -1,0 +1,34 @@
+.post {
+    font-family: "Roboto", sans-serif;
+    padding: 10px;
+}
+
+.avatarBlock {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+}
+
+.name {
+    font-size: 16px;
+    margin-left: 10px;
+    text-transform: capitalize;
+}
+
+.views {
+    font-size: 16px;
+    color: #6c757d;
+}
+
+.textBlock {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

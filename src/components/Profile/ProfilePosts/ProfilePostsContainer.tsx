@@ -1,6 +1,6 @@
-import {addPostTC, PostType, UserProfileType} from "../../../redux/profileReducer";
+import {addPostTC, PostType, updateLikesPostThunkCreator, UserProfileType} from "../../../redux/profileReducer";
 import {StateType} from "../../../redux/store";
-import {MyPosts} from "./MyPosts";
+import {ProfilePosts} from "./ProfilePosts";
 import {connect} from "react-redux";
 import {getPosts, getProfile} from "../../../selectors/profileSelectors";
 
@@ -14,6 +14,7 @@ const mapStateToProps = (state: StateType): MSTPMyPostsType => ({
     profile: getProfile(state)
 });
 
-export const MyPostsContainer = connect(mapStateToProps, {
-    onClickHandler: addPostTC
-})(MyPosts);
+export const ProfilePostsContainer = connect(mapStateToProps, {
+    onClickHandler: addPostTC,
+    updateLikesPost: updateLikesPostThunkCreator
+})(ProfilePosts);
