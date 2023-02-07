@@ -8,6 +8,7 @@ import {v1} from "uuid";
 import Paper from "@mui/material/Paper";
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import Button from '@mui/material/Button';
 
 type UsersPropsType = {
   users: UserType[]
@@ -35,7 +36,8 @@ export const Users: FC<UsersPropsType> = (props) => {
 
   const userElements = users.map(u => {
     const subscribe = u.followed ? "UNFOLLOW" : "FOLLOW";
-    const styleBtn = u.followed ? s.btn + ' ' + s.unfollow : s.btn;
+    // const styleBtn = u.followed ? s.btn + ' ' + s.unfollow : s.btn;
+    const styleBtn = u.followed ? "contained" : "outlined"
     const onClickHandler = () => onToggleSubscribe(u.id);
     return (
       <Paper key={u.id} sx={{mb: 3}}>
@@ -47,10 +49,20 @@ export const Users: FC<UsersPropsType> = (props) => {
               </NavLink>
             </div>
             <div>
-              <button
+              <Button
+                variant={styleBtn}
                 disabled={isFollowing.some(f => f === u.id)}
-                className={styleBtn}
-                onClick={onClickHandler}>{subscribe}</button>
+                onClick={onClickHandler}
+                size="small"
+                sx={{mt: 1}}
+              >
+                {subscribe}
+              </Button>
+              {/*<button*/}
+              {/*  disabled={isFollowing.some(f => f === u.id)}*/}
+              {/*  className={styleBtn}*/}
+              {/*  onClick={onClickHandler}>{subscribe}*/}
+              {/*</button>*/}
             </div>
           </div>
 
