@@ -2,16 +2,19 @@
     width: 100%;
     height: 100%;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Roboto", sans-serif;
 }
 
 .user {
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
     width: 400px;
     min-height: 100px;
     display: flex;
-    /*background: rgba(179, 179, 179, 0);*/
-    /*border-radius: 10px;*/
-    /*padding: 10px;*/
+    align-items: center;
+    padding: 10px;
 }
 
 .ava_btn {
@@ -70,22 +73,27 @@
 
 .pagination {
     display: inline-block;
+    margin-bottom: 30px;
 }
 
 .pagination span {
+    font-size: 18px;
     color: black;
     float: left;
     padding: 4px 10px;
+    /*padding: 6px 14px;*/
     text-decoration: none;
+    margin: 0 5px;
 }
 
 .pagination .activePage {
-    background-color: #4db393;
+    background-color: #1976d2;
     color: white;
     border-radius: 5px;
 }
 
 .pagination span:hover:not(.active) {
+    cursor: pointer;
     background-color: #ddd;
     border-radius: 5px;
 }

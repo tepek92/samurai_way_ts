@@ -16,7 +16,7 @@ export const CustomCheckBox: FC<FormControllerType> = (props) => {
       label="Looking for a job"
       control={
       <Checkbox
-        checked={value}
+        checked={!!value}
         onChange={(e) => onChange(e.currentTarget.checked)}
       />}
     />
