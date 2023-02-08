@@ -3,9 +3,8 @@ import Button from "@mui/material/Button";
 import {UserProfileType} from "../../../../redux/profileReducer";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {required, urlValidate} from "../../../../utils/validators/validator";
-import {FormControllerMUI} from "../../../common/FormControllerMUI/FormControllerMUI";
+import {FormController} from "../../../common/FormController/FormController";
 import style from './ProfileEdit.module.css'
-import {CustomCheckBox} from "./CustomCheckBox/CustomCheckBox";
 
 type ProfileEditPropsType = {
   profile: UserProfileType
@@ -39,7 +38,7 @@ const ProfileEditBody:
         <Field
           name={field.name}
           placeholder={field.placeholder}
-          component={FormControllerMUI}
+          component={FormController}
           validate={[field.validate]}
         />
       </div>
@@ -54,7 +53,8 @@ const ProfileEditBody:
             <Field
               type="checkbox"
               name={'lookingForAJob'}
-              component={CustomCheckBox}
+              placeholder={'Looking for a job'}
+              component={FormController}
             />
           </div>
           <Button type='submit' sx={{mt: 3, width: '80px'}} variant="contained">SAVE</Button>

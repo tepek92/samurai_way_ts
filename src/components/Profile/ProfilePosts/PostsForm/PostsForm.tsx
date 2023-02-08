@@ -6,8 +6,8 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import avatar from "../../../../img/samurai2.png";
 import {UserProfileType} from "../../../../redux/profileReducer";
-import {CustomInput} from "./CustomInput/CustomInput";
 import style from './PostsForm.module.css'
+import {FormController} from "../../../common/FormController/FormController";
 
 export type FormDataPostType = {
   postTex: string
@@ -33,9 +33,10 @@ const MyPostsForm: FC<InjectedFormProps<FormDataPostType, PostFormPropsType> & P
                   className={style.avatar}
                 />
                 <Field
-                  component={CustomInput}
+                  component={FormController}
                   name="postTex"
                   placeholder='Enter you post'
+                  multiline={true}
                 ></Field>
               </div>
 

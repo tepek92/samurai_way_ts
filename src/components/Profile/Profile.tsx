@@ -32,7 +32,7 @@ export const Profile: FC<ProfilePropsType> = (props) => {
 
         <Grid container xs={7} spacing={1}>
           <Grid xs={12}>
-            <ProfilePostsContainer/>
+            <ProfilePostsContainer isMe={props.isMe}/>
           </Grid>
         </Grid>
 

@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
 import style from './SenderMessage.module.css';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {CustomInput} from "../../Profile/ProfilePosts/PostsForm/CustomInput/CustomInput";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
+import {FormController} from "../../common/FormController/FormController";
 
 
 export type FormDataSenderType = {
@@ -15,7 +15,7 @@ const SenderMessage: FC<InjectedFormProps<FormDataSenderType>> =
   return (
     <form className={style.content} onSubmit={handleSubmit}>
       <Field
-        component={CustomInput}
+        component={FormController}
         name="messageText"
         placeholder='Enter you message'
       ></Field>
