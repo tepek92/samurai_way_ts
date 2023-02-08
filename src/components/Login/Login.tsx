@@ -38,8 +38,8 @@ const Login: FC<PropsType> = ({setLogin, isAuth, captchaUrl}) => {
               </a>
             </span>
               <span>or use common test account credentials:</span>
-              <span><b>Email:</b> free@samuraijs.com</span>
-              <span><b>Password:</b> free</span>
+                <span><b>Email:</b> free@samuraijs.com</span>
+                <span><b>Password:</b> free</span>
             </div>
             <LoginFormWithFom onSubmit={onSubmit} captchaUrl={captchaUrl}/>
           </div>

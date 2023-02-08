@@ -1,5 +1,5 @@
 import React, {Component, lazy, Suspense} from 'react';
-import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
+import {HashRouter, Redirect, Route, Switch} from "react-router-dom";
 import './App.css';
 import {ProfileContainer} from "./components/Profile/ProfileContainer";
 import {HeaderContainer} from "./components/Header/HeaderContainer";
@@ -11,7 +11,7 @@ import {compose} from "redux";
 import {Preloader} from "./components/common/Preloader/Preloader";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
-import Container from '@mui/material/Container';
+import {Error404} from "./components/Error404/Error404";
 
 const DialogsContainer = lazy(() =>
   import('./components/Dialogs/DialogsContainer')
@@ -34,7 +34,7 @@ class App extends Component<AppPropsType> {
       return <Preloader/>
     }
     return (
-      <BrowserRouter>
+      <HashRouter>
         <Box sx={{flexGrow: 1, background: '#f9f9f9', height: '100vh'}}>
           <HeaderContainer/>
           <Grid container spacing={2}>
@@ -50,13 +50,13 @@ class App extends Component<AppPropsType> {
                   <Route path="/dialogs" render={() => <DialogsContainer/>}/>
                   <Route path="/users" render={() => <UsersContainer/>}/>
                   <Route path="/login" render={() => <LoginContainer/>}/>
-                  <Route path="*" render={() => <div>404 PAGE NOT FOUND</div>}/>
+                  <Route path="*" render={() => <Error404/>}/>
                 </Switch>
               </Suspense>
             </Grid>
           </Grid>
         </Box>
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 }
