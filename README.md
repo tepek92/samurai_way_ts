@@ -8,7 +8,7 @@
 - [@tepek92](https://github.com/tepek92)
 
 
-### Implemented:
+## Implemented:
 
 - #### login / logout / captcha
 - #### profile editing
