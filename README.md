@@ -2,8 +2,21 @@
 
 #### In this project, I worked with class components and some old libraries. What can be useful in projects with legacy code.
 
+[![demo](https://img.shields.io/badge/-demo-brightgreen?style=for-the-badge&logo=github)](https://tepek92.github.io/samurai_way_ts/#/)
+
 ## Author:
 - [@tepek92](https://github.com/tepek92)
+
+
+### Implemented:
+
+- #### login / logout / captcha
+- #### profile editing
+- #### publishing posts
+- #### pagination on the user page
+- #### user subscription and unsubscription
+- #### go to user page
+- #### sending messages
 
 ## Stack:
 
