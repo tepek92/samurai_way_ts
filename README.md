@@ -1,6 +1,6 @@
 # Social Network
 
-#### In this project, I worked with class components and some old libraries. What can be useful in projects with legacy code.
+#### In this project, I worked with class components and some old libraries.
 
 [![demo](https://img.shields.io/badge/-demo-brightgreen?style=for-the-badge&logo=github)](https://tepek92.github.io/samurai_way_ts/#/)
 
