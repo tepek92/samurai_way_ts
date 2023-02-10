@@ -24,6 +24,7 @@
 - [![Redux][redux]][redux-url]
 - [![Redux-router-dom][rrd]][rrd-url]
 - [![Typescript][typescript]][typescript-url]
+- [![MaterialUI][mui]][mui-url]
 
 
 <!-- LINKS  -->
@@ -35,3 +36,5 @@
 [rrd-url]: https://reactrouter.com/en/main
 [typescript]: https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
 [typescript-url]: https://www.typescriptlang.org/
+[mui]: https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white
+[mui-url]: https://mui.com/
